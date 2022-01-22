@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView, new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new HomeFragment()).commit();
 
 
         bottomNavigationView = findViewById((R.id.bottomNavigationView));
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView, fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
                 return true;
             }
         });
