@@ -7,11 +7,10 @@
     tools:context=".MainActivity">
 
     <FrameLayout
-        android:layout_width="410dp"
-        android:layout_height="678dp"
-        android:layout_marginBottom="675dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         android:id="@+id/fragmentContainer"
+        android:layout_width="390dp"
+        android:layout_height="770dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +27,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+<!--        app:layout_constraintGuide_begin="20dp"-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
