@@ -45,8 +45,6 @@ public class ChargeFragment extends Fragment {
     private PushHistoryAdapter pushHistoryAdapter;
     private LinearLayoutManager linearLayoutManager;
 
-//    TextView textView;
-
     public ChargeFragment() {
         // Required empty public constructor
     }
@@ -80,22 +78,13 @@ public class ChargeFragment extends Fragment {
 //        textView = (TextView) getView().findViewById(R.id.textView_test);
 
         arrayList = new ArrayList<>();
-
-
-//        recyclerView = (RecyclerView) getView().findViewById(R.id.push_history);
-//        linearLayoutManager = new LinearLayoutManager(getContext());
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        recyclerView.setAdapter(pushHistoryAdapter);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        //String test = "http://192.168.56.1:80/test2_get_car.php";
-        String test = "http://192.168.56.1:80/test.php";
+        String test = "http://192.168.56.1:80/get_push_history.php";
         URLConnector thread = new URLConnector(test);
 
         thread.start();
@@ -109,10 +98,6 @@ public class ChargeFragment extends Fragment {
 
         JsonObject resultObj = thread.getResult();
         JsonArray jsonArray = new JsonArray();
-
-//        for(int i = 0; i < resultObj.get("car").getAsJsonArray().size(); i++){
-//            System.out.println("TEST: "+resultObj.get("car").getAsJsonArray().get(i));
-//        }
 
         jsonArray = resultObj.get("push_history").getAsJsonArray();
         for(int i = 0; i < jsonArray.size(); i++){

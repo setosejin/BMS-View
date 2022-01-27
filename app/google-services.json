@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "817901800782",
+    "project_id": "bms-view",
+    "storage_bucket": "bms-view.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817901800782:android:a60eafdac3880770ffa21f",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817901800782-vdskmi1oj2c2i89m2beit7svuqs53qv7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "33ffffd1b4a4a0dca48757ce7a78f1943faf5250"
+          }
+        },
+        {
+          "client_id": "817901800782-6u08u0e5ts6lqcoqr56qhrg80u5f00ec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4BT_C6oMY8go9_b99o5lhKn1mHel1tLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817901800782-6u08u0e5ts6lqcoqr56qhrg80u5f00ec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
