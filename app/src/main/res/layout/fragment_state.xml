@@ -3,10 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_700"
     tools:context=".StateFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+<!--    <com.github.mikephil.charting.charts.LineChart-->
+<!--        android:id="@+id/line_chart"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
+
     <TextView
         android:id="@+id/quick_cnt"
         android:layout_width="wrap_content"
@@ -15,6 +20,10 @@
         android:textSize="20dp"
         android:layout_gravity="center"/>
 
+    <Button
+        android:id="@+id/token_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 
 </FrameLayout>

@@ -1,22 +1,42 @@
 package com.example.myapplication;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.EventLogTags;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.util.EventLogTags.Description;
+import android.widget.Toast;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +56,11 @@ public class StateFragment extends Fragment {
 
     TextView textView;
     String quick_cnt;
+
+
+//    private LineChart lineChart;
+//    List<Entry> entryList = new ArrayList<>();
+
 
     public StateFragment() {
         // Required empty public constructor
@@ -59,7 +84,6 @@ public class StateFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +92,7 @@ public class StateFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         quick_cnt = new String();
+
     }
 
     @Override
@@ -96,20 +121,90 @@ public class StateFragment extends Fragment {
             quick_cnt = jsonArray.get(i).getAsJsonObject().get("quick_recharge_cnt").toString();
         }
 
-
+        //line_chart로 그려줄 (속성, 값) entry에 넣어주기
+//        entryList.add(new Entry(1, 1));
+//        entryList.add(new Entry(2, 2));
+//        entryList.add(new Entry(3, 0));
+//        entryList.add(new Entry(4, 4));
+//        entryList.add(new Entry(5, 3));
         return inflater.inflate(R.layout.fragment_state, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         View view = getView();
+
         if(view != null) {
             //실제로 매칭해주고 setText 등등..
             textView = view.findViewById(R.id.quick_cnt);
             textView.setText(quick_cnt);
 
+            //lineChart
+//            lineChart = (LineChart) view.findViewById(R.id.line_chart);
+//
+//            LineDataSet lineDataSet = new LineDataSet(entryList, "속성명1");
+//            lineDataSet.setLineWidth(2);
+//            lineDataSet.setCircleRadius(6);
+//            lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
+//            lineDataSet.setCircleColorHole(Color.BLUE);
+//            lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
+//            lineDataSet.setDrawCircleHole(true);
+//            lineDataSet.setDrawCircles(true);
+//            lineDataSet.setDrawHorizontalHighlightIndicator(false);
+//            lineDataSet.setDrawHighlightIndicators(false);
+//            lineDataSet.setDrawValues(false);
+//
+//            LineData lineData = new LineData();
+//            lineData.addDataSet(lineDataSet);
+//            lineChart.setData(lineData);
+//
+//            XAxis xAxis = lineChart.getXAxis();
+//            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+//            xAxis.setTextColor(Color.BLACK);
+//            xAxis.enableGridDashedLine(8, 24, 0);
+//
+//            YAxis yLAxis = lineChart.getAxisLeft();
+//            yLAxis.setTextColor(Color.BLACK);
+//
+//            YAxis yRAxis = lineChart.getAxisRight();
+//            yRAxis.setDrawLabels(false);
+//            yRAxis.setDrawAxisLine(false);
+//            yRAxis.setDrawGridLines(false);
+//
+//            lineChart.setDoubleTapToZoomEnabled(false);
+//            lineChart.setDrawGridBackground(false);
+//
+//            lineChart.animateY(2000, Easing.EasingOption.EaseInCubic);
+//            lineChart.invalidate();
+
+            Button token_button = view.findViewById(R.id.token_button);
+
+            token_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //fcm token
+                    FirebaseMessaging.getInstance().getToken()
+                            .addOnCompleteListener(new OnCompleteListener<String>() {
+                                @Override
+                                public void onComplete(@NonNull Task<String> task) {
+                                    if (!task.isSuccessful()){
+                                        Log.w("SF", "Fetching FCM registration token failed", task.getException());
+                                        return;
+                                    }
+                                    // Get new FCM registration token
+                                    String token = task.getResult();
+
+                                    // Log and toast
+                                    String msg = getString(R.string.msg_token_fmt, token);
+                                    Log.d("SF", msg);
+                                    Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+            });
         }
     }
+
+
 }
