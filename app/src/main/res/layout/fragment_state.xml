@@ -7,10 +7,7 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-<!--    <com.github.mikephil.charting.charts.LineChart-->
-<!--        android:id="@+id/line_chart"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
+
 
     <TextView
         android:id="@+id/quick_cnt"
@@ -20,10 +17,10 @@
         android:textSize="20dp"
         android:layout_gravity="center"/>
 
-    <Button
-        android:id="@+id/token_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+<!--    <Button-->
+<!--        android:id="@+id/token_button"-->
+<!--        android:layout_width="44dp"-->
+<!--        android:layout_height="wrap_content" />-->
 
 
 </FrameLayout>

@@ -1,23 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_700"
     tools:context=".MapFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/car_map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="0dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginBottom="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.707" />
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Map Fragment"-->
-<!--        android:textSize="20dp"-->
-<!--        android:layout_gravity="center"/>-->
+    <Button
+        android:id="@+id/naviBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="경로 탐색"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/car_map"
+        tools:layout_editor_absoluteX="146dp" />
 
-</FrameLayout>
+    <SearchView
+        android:layout_width="186dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="24dp"
+        android:background="@color/purple_200"
+        app:layout_constraintBottom_toTopOf="@+id/car_map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.728"
+        app:layout_constraintStart_toEndOf="@+id/switch1" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="108dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="24dp"
+        android:background="@color/purple_200"
+        app:layout_constraintBottom_toTopOf="@+id/car_map"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:background="@color/purple_200"
+        android:text="가까운 충전소/정비소 위치"
+        app:layout_constraintBottom_toTopOf="@+id/switch1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.776" />
+
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="Map Fragment"-->
+    <!--        android:textSize="20dp"-->
+    <!--        android:layout_gravity="center"/>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

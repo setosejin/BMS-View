@@ -13,12 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -44,6 +47,11 @@ public class ChargeFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private PushHistoryAdapter pushHistoryAdapter;
     private LinearLayoutManager linearLayoutManager;
+
+    private LineChart lineChart_soc, lineChart_soh;
+    List<Entry> entryList_soc = new ArrayList<>();
+    List<Entry> entryList_soh = new ArrayList<>();
+
 
     public ChargeFragment() {
         // Required empty public constructor
@@ -110,6 +118,18 @@ public class ChargeFragment extends Fragment {
             arrayList.add(pushHistory);
         }
 
+        //line_chart로 그려줄 (속성, 값) entry에 넣어주기
+        entryList_soc.add(new Entry(1, 1));
+        entryList_soc.add(new Entry(2, 2));
+        entryList_soc.add(new Entry(3, 0));
+        entryList_soc.add(new Entry(4, 4));
+        entryList_soc.add(new Entry(5, 3));
+
+        entryList_soh.add(new Entry(5, 1));
+        entryList_soh.add(new Entry(4, 2));
+        entryList_soh.add(new Entry(3, 0));
+        entryList_soh.add(new Entry(2, 4));
+        entryList_soh.add(new Entry(1, 3));
 
         return inflater.inflate(R.layout.fragment_charge, container, false);
     }
@@ -123,6 +143,46 @@ public class ChargeFragment extends Fragment {
             //실제로 매칭해주고 setText 등등..
 //            textView = view.findViewById(R.id.textView_test);
 //            textView.setText("modified");
+
+            //lineChart
+            lineChart_soc = (LineChart) view.findViewById(R.id.line_chart_soc);
+            lineChart_soh = (LineChart) view.findViewById(R.id.line_chart_soh);
+
+//            LineDataSet lineDataSet = new LineDataSet(entryList, "속성명1");
+//            lineDataSet.setLineWidth(2);
+//            lineDataSet.setCircleRadius(6);
+//            lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
+//            lineDataSet.setCircleColorHole(Color.BLUE);
+//            lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
+//            lineDataSet.setDrawCircleHole(true);
+//            lineDataSet.setDrawCircles(true);
+//            lineDataSet.setDrawHorizontalHighlightIndicator(false);
+//            lineDataSet.setDrawHighlightIndicators(false);
+//            lineDataSet.setDrawValues(false);
+//
+//            LineData lineData = new LineData();
+//            lineData.addDataSet(lineDataSet);
+//            lineChart.setData(lineData);
+//
+//            XAxis xAxis = lineChart.getXAxis();
+//            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+//            xAxis.setTextColor(Color.BLACK);
+//            xAxis.enableGridDashedLine(8, 24, 0);
+//
+//            YAxis yLAxis = lineChart.getAxisLeft();
+//            yLAxis.setTextColor(Color.BLACK);
+//
+//            YAxis yRAxis = lineChart.getAxisRight();
+//            yRAxis.setDrawLabels(false);
+//            yRAxis.setDrawAxisLine(false);
+//            yRAxis.setDrawGridLines(false);
+//
+//            lineChart.setDoubleTapToZoomEnabled(false);
+//            lineChart.setDrawGridBackground(false);
+//
+//            lineChart.animateY(2000, Easing.EasingOption.EaseInCubic);
+            lineChart_soc.invalidate();
+            lineChart_soh.invalidate();
 
             pushHistoryAdapter = new PushHistoryAdapter(arrayList);
 
