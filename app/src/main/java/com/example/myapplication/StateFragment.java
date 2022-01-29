@@ -58,10 +58,6 @@ public class StateFragment extends Fragment {
     String quick_cnt;
 
 
-//    private LineChart lineChart;
-//    List<Entry> entryList = new ArrayList<>();
-
-
     public StateFragment() {
         // Required empty public constructor
     }
@@ -121,12 +117,6 @@ public class StateFragment extends Fragment {
             quick_cnt = jsonArray.get(i).getAsJsonObject().get("quick_recharge_cnt").toString();
         }
 
-        //line_chart로 그려줄 (속성, 값) entry에 넣어주기
-//        entryList.add(new Entry(1, 1));
-//        entryList.add(new Entry(2, 2));
-//        entryList.add(new Entry(3, 0));
-//        entryList.add(new Entry(4, 4));
-//        entryList.add(new Entry(5, 3));
         return inflater.inflate(R.layout.fragment_state, container, false);
     }
 
@@ -140,69 +130,35 @@ public class StateFragment extends Fragment {
             textView = view.findViewById(R.id.quick_cnt);
             textView.setText(quick_cnt);
 
-            //lineChart
-//            lineChart = (LineChart) view.findViewById(R.id.line_chart);
-//
-//            LineDataSet lineDataSet = new LineDataSet(entryList, "속성명1");
-//            lineDataSet.setLineWidth(2);
-//            lineDataSet.setCircleRadius(6);
-//            lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
-//            lineDataSet.setCircleColorHole(Color.BLUE);
-//            lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
-//            lineDataSet.setDrawCircleHole(true);
-//            lineDataSet.setDrawCircles(true);
-//            lineDataSet.setDrawHorizontalHighlightIndicator(false);
-//            lineDataSet.setDrawHighlightIndicators(false);
-//            lineDataSet.setDrawValues(false);
-//
-//            LineData lineData = new LineData();
-//            lineData.addDataSet(lineDataSet);
-//            lineChart.setData(lineData);
-//
-//            XAxis xAxis = lineChart.getXAxis();
-//            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-//            xAxis.setTextColor(Color.BLACK);
-//            xAxis.enableGridDashedLine(8, 24, 0);
-//
-//            YAxis yLAxis = lineChart.getAxisLeft();
-//            yLAxis.setTextColor(Color.BLACK);
-//
-//            YAxis yRAxis = lineChart.getAxisRight();
-//            yRAxis.setDrawLabels(false);
-//            yRAxis.setDrawAxisLine(false);
-//            yRAxis.setDrawGridLines(false);
-//
-//            lineChart.setDoubleTapToZoomEnabled(false);
-//            lineChart.setDrawGridBackground(false);
-//
-//            lineChart.animateY(2000, Easing.EasingOption.EaseInCubic);
-//            lineChart.invalidate();
 
-            Button token_button = view.findViewById(R.id.token_button);
 
-            token_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //fcm token
-                    FirebaseMessaging.getInstance().getToken()
-                            .addOnCompleteListener(new OnCompleteListener<String>() {
-                                @Override
-                                public void onComplete(@NonNull Task<String> task) {
-                                    if (!task.isSuccessful()){
-                                        Log.w("SF", "Fetching FCM registration token failed", task.getException());
-                                        return;
-                                    }
-                                    // Get new FCM registration token
-                                    String token = task.getResult();
-
-                                    // Log and toast
-                                    String msg = getString(R.string.msg_token_fmt, token);
-                                    Log.d("SF", msg);
-                                    Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-            });
+            //FCM token 받아옴
+            //cNnuuXz-To2ARwy-NVTR_F:APA91bE6EHUNYt2arLCUUFaGWTG6mNHnfNW1Dhtp2KrmZALY53PeZ84l40K59nLGzd7boHL_vtsGviD_zNBZ987a5uK46Zf90CwhKhTuEqAwllZ2cFI7mjfpSthjVc44M8dSovqKx34y
+//            Button token_button = view.findViewById(R.id.token_button);
+//
+//            token_button.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    //fcm token
+//                    FirebaseMessaging.getInstance().getToken()
+//                            .addOnCompleteListener(new OnCompleteListener<String>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<String> task) {
+//                                    if (!task.isSuccessful()){
+//                                        Log.w("SF", "Fetching FCM registration token failed", task.getException());
+//                                        return;
+//                                    }
+//                                    // Get new FCM registration token
+//                                    String token = task.getResult();
+//
+//                                    // Log and toast
+//                                    String msg = getString(R.string.msg_token_fmt, token);
+//                                    Log.d("SF", msg);
+//                                    Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+//                }
+//            });
         }
     }
 

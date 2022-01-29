@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,8 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,6 +74,7 @@ public class HomeFragment extends Fragment {
         }
 
         charge_percent = new String();
+
     }
 
     @Override
@@ -106,6 +117,42 @@ public class HomeFragment extends Fragment {
             textView = view.findViewById(R.id.charge_status);
             textView.setText(charge_percent);
 
+            ArrayList colors = new ArrayList();
+
+            PieChart pieChart = view.findViewById(R.id.charge_chart);
+            ArrayList charge_per = new ArrayList();
+            float c_p = 0;
+            charge_percent = charge_percent.substring(1, charge_percent.length() - 1);
+            System.out.println(charge_percent);
+            c_p = Float.parseFloat(charge_percent);
+            System.out.println("Float: " + c_p);
+
+            if(c_p > 80){
+                colors.add(Color.parseColor("#0000ff"));
+            }
+            else if(c_p > 50){
+                colors.add(Color.parseColor("#00ff00"));
+            }
+            else if(c_p > 20){
+                colors.add(Color.parseColor("#ffff00"));
+            }
+            else{
+                colors.add(Color.parseColor("#ff0000"));
+            }
+            colors.add(Color.parseColor("#ffffff"));
+
+
+            charge_per.add(new Entry(c_p, 0));
+            charge_per.add(new Entry(100-c_p, 1));
+            ArrayList charge_amount = new ArrayList<String>();
+            charge_amount.add("충전량");
+            charge_amount.add("");
+
+            PieDataSet dataSet = new PieDataSet(charge_per, "l");
+            dataSet.setColors(colors);
+            PieData data = new PieData(charge_amount, dataSet);
+
+            pieChart.setData(data);
         }
     }
 }
