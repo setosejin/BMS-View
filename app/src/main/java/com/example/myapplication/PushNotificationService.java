@@ -44,6 +44,7 @@ public class PushNotificationService extends FirebaseMessagingService {
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         Map<String, String> data = remoteMessage.getData();
         Log.d("FROM", remoteMessage.getFrom());
+        System.out.println(data);
         sendNotification(notification, data);
     }
 
@@ -52,7 +53,7 @@ public class PushNotificationService extends FirebaseMessagingService {
         Bundle bundle = new Bundle();
         bundle.putString(FCM_PARAM, data.get(FCM_PARAM));
 
-        Intent intent = new Intent(this, StateFragment.class);
+        Intent intent = new Intent(this, StateFragment.class); // push정보를  StateFragment로 넘김
         intent.putExtras(bundle);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -87,7 +88,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//SDK 버전 26 이상부터는 channel에 대한 설정 따로 필요
             NotificationChannel channel = new NotificationChannel(
                     notification_channel_id, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT
             );

@@ -20,11 +20,14 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.ScatterChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.ScatterDataSet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceIdReceiver;
@@ -56,6 +59,11 @@ public class StateFragment extends Fragment {
 
     TextView textView;
     String quick_cnt;
+
+    ArrayList<Entry> list_temp = new ArrayList<>();
+
+    private ScatterChart scatter_temp, scatter_volt;
+    List<ScatterDataSet> set_temp = new ArrayList<>();
 
 
     public StateFragment() {
@@ -95,7 +103,7 @@ public class StateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        String test = "http://192.168.56.1:80/get_chrg.php";
+        String test = "http://192.168.56.1:80/get_btry.php";
         URLConnector thread = new URLConnector(test);
 
         thread.start();
@@ -110,11 +118,14 @@ public class StateFragment extends Fragment {
         JsonObject resultObj = thread.getResult();
         JsonArray jsonArray = new JsonArray();
 
-        jsonArray = resultObj.get("chrg").getAsJsonArray();
+        jsonArray = resultObj.get("btry").getAsJsonArray();
+
         for(int i = 0; i < jsonArray.size(); i++){
             System.out.println("TEST: "+jsonArray.get(i));
-            System.out.println((jsonArray.get(i).getAsJsonObject().get("quick_recharge_cnt").toString()));
-            quick_cnt = jsonArray.get(i).getAsJsonObject().get("quick_recharge_cnt").toString();
+            System.out.println((jsonArray.get(i).getAsJsonObject().get("btry_mdul_tempr_arr").toString()));
+            quick_cnt = jsonArray.get(i).getAsJsonObject().get("btry_mdul_tempr_arr").toString();
+
+//            list_temp.add(new Entry(i, ))
         }
 
         return inflater.inflate(R.layout.fragment_state, container, false);
@@ -126,9 +137,15 @@ public class StateFragment extends Fragment {
         View view = getView();
 
         if(view != null) {
-            //실제로 매칭해주고 setText 등등..
-            textView = view.findViewById(R.id.quick_cnt);
-            textView.setText(quick_cnt);
+            scatter_temp = view.findViewById(R.id.scatter_tempr);
+            scatter_volt = view.findViewById(R.id.scatter_volts);
+
+            Legend l = scatter_temp.getLegend();
+            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+
+
+//            scatter_temp.setData();
 
 
 
