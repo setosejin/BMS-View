@@ -6,7 +6,7 @@
     android:layout_margin="10dp">
 
     <ImageView
-        android:src="@drawable/ic_baseline_bolt_24"
+        android:src="@drawable/baseline_tips_and_updates_black_24dp"
         android:id="@+id/push_history_icon"
         android:padding="15dp"
         android:layout_width="100dp"

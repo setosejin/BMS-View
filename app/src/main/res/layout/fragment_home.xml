@@ -40,22 +40,27 @@
         android:text="최근 업데이트 일시:"
         app:layout_constraintBottom_toTopOf="@+id/charge_chart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.331"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.077" />
+        app:layout_constraintVertical_bias="0.178" />
 
     <Button
         android:id="@+id/updateBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="refresh"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="4dp"
+        app:icon="@drawable/baseline_refresh_black_24dp"
+        app:iconPadding="0dp"
         app:layout_constraintBottom_toTopOf="@+id/charge_chart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.282"
         app:layout_constraintStart_toEndOf="@+id/update_time"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintVertical_bias="0.123" />
 
     <TextView
         android:id="@+id/my_car_info"
@@ -74,33 +79,33 @@
         android:id="@+id/my_car_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="48dp"
         android:text="EV6"
         app:layout_constraintBottom_toTopOf="@+id/my_car_now"
         app:layout_constraintEnd_toStartOf="@+id/car_key_status"
-        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintHorizontal_bias="0.399"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/car_charge_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
+        android:layout_marginEnd="84dp"
         android:layout_marginBottom="4dp"
+        android:background="@color/kt"
         android:text="충전중"
-        android:background="@color/purple_200"
         app:layout_constraintBottom_toTopOf="@+id/car_key_status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateBtn"
-        app:layout_constraintVertical_bias="0.373" />
+        app:layout_constraintVertical_bias="0.483" />
 
     <TextView
         android:id="@+id/car_key_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="68dp"
-        android:layout_marginBottom="32dp"
-        android:background="@color/purple_200"
+        android:layout_marginBottom="48dp"
+        android:background="@color/kt"
         android:text="시동OFF"
         app:layout_constraintBottom_toTopOf="@+id/my_car_now"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -113,5 +118,25 @@
         app:layout_constraintBottom_toTopOf="@+id/charge_chart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_time_to_leave_24"
+        app:layout_constraintBottom_toTopOf="@+id/my_car_now"
+        app:layout_constraintEnd_toStartOf="@+id/car_key_status"
+        app:layout_constraintTop_toBottomOf="@+id/car_charge_status"
+        app:layout_constraintVertical_bias="0.605" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/baseline_electrical_services_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintEnd_toStartOf="@+id/car_charge_status"
+        app:layout_constraintTop_toBottomOf="@+id/updateBtn"
+        app:layout_constraintVertical_bias="0.483" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

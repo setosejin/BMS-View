@@ -50,7 +50,7 @@ public class PushHistoryAdapter extends RecyclerView.Adapter<PushHistoryAdapter.
 //        holder.tv_send_msg.setText(arrayList.get(position).getTv_send_msg());
 //        holder.tv_send_time.setText(arrayList.get(position).getTv_send_time());
 
-        holder.iv_icon.setImageResource(arrayList.get(position).getIv_icon()); //
+        //holder.iv_icon.setImageResource(arrayList.get(position).getIv_icon()); //
         holder.tv_push_type.setText(arrayList.get(position).getTv_push_type());
         holder.tv_send_msg.setText(arrayList.get(position).getTv_send_msg());
         holder.tv_send_time.setText(arrayList.get(position).getTv_send_time());

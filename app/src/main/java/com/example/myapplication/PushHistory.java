@@ -8,7 +8,7 @@ public class PushHistory {
     private String tv_push_type;
 
     public PushHistory(int iv_icon, String tv_push_type, String tv_send_time, String tv_send_msg) {
-        this.iv_icon = iv_icon;
+        //this.iv_icon = iv_icon;
         this.tv_send_time = tv_send_time;
         this.tv_send_msg = tv_send_msg;
         this.tv_push_type = tv_push_type;

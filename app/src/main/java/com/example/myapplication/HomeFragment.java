@@ -4,18 +4,21 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -42,6 +45,10 @@ public class HomeFragment extends Fragment {
 
     TextView textView;
     String charge_percent;
+    Button refresh_button;
+
+    //FragmentTransaction ft = getFragmentManager().beginTransaction();
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -107,6 +114,8 @@ public class HomeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+    Fragment f = this;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -114,6 +123,17 @@ public class HomeFragment extends Fragment {
         View view = getView();
         if(view != null) {
             //실제로 매칭해주고 setText 등등..
+            refresh_button = view.findViewById(R.id.updateBtn);
+            refresh_button.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("Btn Clicked");
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(f).attach(f).commit();
+                    System.out.println("Refreshed");
+                }
+            }) ;
+
             textView = view.findViewById(R.id.charge_status);
             textView.setText(charge_percent);
 
@@ -142,15 +162,15 @@ public class HomeFragment extends Fragment {
             colors.add(Color.parseColor("#ffffff"));
 
 
-            charge_per.add(new Entry(c_p, 0));
-            charge_per.add(new Entry(100-c_p, 1));
+            charge_per.add(new PieEntry(c_p, 0));
+            charge_per.add(new PieEntry(100-c_p, 1));
             ArrayList charge_amount = new ArrayList<String>();
             charge_amount.add("충전량");
             charge_amount.add("");
 
             PieDataSet dataSet = new PieDataSet(charge_per, "l");
             dataSet.setColors(colors);
-            PieData data = new PieData(charge_amount, dataSet);
+            PieData data = new PieData(dataSet);
 
             pieChart.setData(data);
         }
