@@ -6,6 +6,19 @@
     android:layout_height="wrap_content"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/notifyBtn"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        app:icon="@drawable/baseline_notifications_active_black_24dp"
+        app:iconPadding="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="390dp"

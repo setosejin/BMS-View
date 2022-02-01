@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -46,9 +47,6 @@ public class HomeFragment extends Fragment {
     TextView textView;
     String charge_percent;
     Button refresh_button;
-
-    //FragmentTransaction ft = getFragmentManager().beginTransaction();
-
 
     public HomeFragment() {
         // Required empty public constructor

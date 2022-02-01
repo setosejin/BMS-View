@@ -57,10 +57,9 @@ public class SchedulerService extends Service {
 
             //확인하면 자동으로 알림이 제거 되도록
             Notifi.flags = Notification.FLAG_AUTO_CANCEL;
-
-
             Notifi_M.notify( 777 , Notifi);
 
+            System.out.println("NOTIFY");
             //토스트 띄우기
             Toast.makeText(SchedulerService.this, "뜸?", Toast.LENGTH_LONG).show();
         }
