@@ -15,6 +15,7 @@ public class SchedulerService extends Service {
     SleepScheduler thread;
     Notification Notifi ;
 
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;

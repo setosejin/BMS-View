@@ -4,12 +4,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -40,6 +43,11 @@ public class ChargeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    public static Button refresh_button;
+
+    TextView tv_perfect_charge, tv_perfect_discharge, tv_quick_charge, tv_slow_charge, tv_fuel, tv_distance, tv_time;
+
+    String perfect_charge, perfect_discharge, quick_charge, slow_charge, fuel, distance, time;
 
     private LineChart lineChart_soc, lineChart_soh;
     List<Entry> entryList_soc = new ArrayList<>();
@@ -101,21 +109,27 @@ public class ChargeFragment extends Fragment {
         JsonArray jsonArray_chrg = new JsonArray();
 
         jsonArray_chrg = resultObj_chrg.get("chrg").getAsJsonArray();
-        for(int i = 0; i < 10; i++){
+
+        quick_charge = jsonArray_chrg.get(0).getAsJsonObject().get("quick_recharge_cnt").toString();
+        slow_charge = jsonArray_chrg.get(0).getAsJsonObject().get("slow_recharge_cnt").toString();
+        distance = jsonArray_chrg.get(0).getAsJsonObject().get("odometer").toString();
+        time = jsonArray_chrg.get(0).getAsJsonObject().get("mvmn_time").toString();
+
+        for(int i = 0; i < 100; i++){
             //System.out.println("TEST: "+jsonArray_chrg.get(i));
-            System.out.println("["+i+"] "+(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString()));
+            //System.out.println("["+i+"] "+(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString()));
             int len = jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString().length();
             int len2 = jsonArray_chrg.get(i).getAsJsonObject().get("state_of_health").toString().length();
+            //line_chart로 그려줄 (속성, 값) entry에 넣어주기
             entryList_soc.add(new Entry(i, Float.parseFloat(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString().substring(1, len - 1))));
             entryList_soh.add(new Entry(i, Float.parseFloat(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_health").toString().substring(1, len2 - 1))));
-
         }
-
-        //line_chart로 그려줄 (속성, 값) entry에 넣어주기
-
 
         return inflater.inflate(R.layout.fragment_charge, container, false);
     }
+
+
+    Fragment f = this;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -126,12 +140,33 @@ public class ChargeFragment extends Fragment {
             //실제로 매칭해주고 setText 등등..
 //            textView = view.findViewById(R.id.textView_test);
 //            textView.setText("modified");
+            tv_distance = view.findViewById(R.id.distance2);
+            tv_distance.setText(distance);
+
+            tv_quick_charge = view.findViewById(R.id.quick_charge_num);
+            tv_quick_charge.setText(quick_charge);
+
+            tv_slow_charge = view.findViewById(R.id.slow_charge_num);
+            tv_slow_charge.setText(slow_charge);
+
+            tv_fuel = view.findViewById(R.id.fuel2);
+            tv_fuel.setText("6.1km/kWh");
+
+            tv_time = view.findViewById(R.id.time2);
+            tv_time.setText(time);
+
+            refresh_button = view.findViewById(R.id.charge_refresh);
+            refresh_button.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("Btn Clicked");
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(f).attach(f).commit();
+                    System.out.println("Refreshed");
+                }
+            }) ;
 
             //lineChart
-
-            System.out.println("LINECHART: "+ entryList_soc);
-            System.out.println("LINECHART: "+ entryList_soh);
-
             lineChart_soc = (LineChart) view.findViewById(R.id.line_chart_soc);
             lineChart_soh = (LineChart) view.findViewById(R.id.line_chart_soh);
 
@@ -139,7 +174,7 @@ public class ChargeFragment extends Fragment {
             LineDataSet lineDataSet_soh = new LineDataSet(entryList_soh, "속성명2");
 
             lineDataSet_soc.setLineWidth(2);
-            lineDataSet_soc.setCircleRadius(6);
+            lineDataSet_soc.setCircleRadius(3);
             lineDataSet_soc.setCircleColor(Color.parseColor("#FFA1B4DC"));
             //lineDataSet_soc.setCircleColorHole(Color.BLUE);
             lineDataSet_soc.setColor(Color.parseColor("#FFA1B4DC"));
@@ -150,7 +185,7 @@ public class ChargeFragment extends Fragment {
             lineDataSet_soc.setDrawValues(false);
 
             lineDataSet_soh.setLineWidth(2);
-            lineDataSet_soh.setCircleRadius(6);
+            lineDataSet_soh.setCircleRadius(3);
             lineDataSet_soh.setCircleColor(Color.parseColor("#FFA1B4DC"));
             //lineDataSet_soh.setCircleColorHole(Color.BLUE);
             lineDataSet_soh.setColor(Color.parseColor("#FFA1B4DC"));

@@ -22,11 +22,13 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     private Button button;
     private Button token_button;
+    public static String android_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        android_token = new String();
         button = (Button) findViewById(R.id.notifyBtn);
         token_button = (Button) findViewById(R.id.token_button);
         //백그라운드에서 동작하는 스케쥴러 시작
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                                 // Log and toast
                                 String msg = getString(R.string.msg_token_fmt, token);
                                 Log.d("SF", msg);
+                                android_token = msg.substring(12, msg.length());
                             }
                         });
             }

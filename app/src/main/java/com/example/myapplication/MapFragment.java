@@ -88,7 +88,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
-        LatLng location = new LatLng(37.47283109859944, 127.03011507206752);
+        LatLng location = new LatLng(37.47156575506914, 127.02938828426859);
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.title("KT 우면동");

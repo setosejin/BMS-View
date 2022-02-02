@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -71,7 +72,7 @@ public class StateFragment extends Fragment {
 
     private ScatterChart scatter_temp, scatter_volt;
     List<ScatterDataSet> set_temp = new ArrayList<>();
-
+    public static Button refresh_button;
 
     public StateFragment() {
         // Required empty public constructor
@@ -166,12 +167,26 @@ public class StateFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_state, container, false);
     }
 
+    Fragment f = this;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         View view = getView();
 
         if(view != null) {
+            refresh_button = view.findViewById(R.id.state_refresh);
+
+            refresh_button.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("Btn Clicked");
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(f).attach(f).commit();
+                    System.out.println("Refreshed");
+                }
+            }) ;
+
             //push_history
             pushHistoryAdapter = new PushHistoryAdapter(arrayList);
             recyclerView = (RecyclerView) getView().findViewById(R.id.push_history);
@@ -179,6 +194,8 @@ public class StateFragment extends Fragment {
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(pushHistoryAdapter);
 
+
+            //scatter plot
             scatter_temp = view.findViewById(R.id.scatter_tempr);
             scatter_volt = view.findViewById(R.id.scatter_volts);
 
