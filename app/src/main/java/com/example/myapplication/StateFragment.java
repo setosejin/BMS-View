@@ -60,6 +60,13 @@ public class StateFragment extends Fragment {
     TextView textView;
     String quick_cnt;
 
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private PushHistoryAdapter pushHistoryAdapter;
+    private LinearLayoutManager linearLayoutManager;
+    private ArrayList<PushHistory> arrayList;
     ArrayList<Entry> list_temp = new ArrayList<>();
 
     private ScatterChart scatter_temp, scatter_volt;
@@ -96,34 +103,62 @@ public class StateFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         quick_cnt = new String();
-
+        arrayList = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        String test = "http://192.168.56.1:80/get_btry.php";
-        URLConnector thread = new URLConnector(test);
 
-        thread.start();
+        String get_history = "http://192.168.56.1:80/get_push_history.php";
+        URLConnector history_thread = new URLConnector(get_history);
+
+        history_thread.start();
         try{
-            thread.join();
+            history_thread.join();
             //System.out.println("waiting... for result");
         }
         catch(InterruptedException e){
             System.out.println(e);
         }
 
-        JsonObject resultObj = thread.getResult();
+        JsonObject resultObj = history_thread.getResult();
         JsonArray jsonArray = new JsonArray();
 
-        jsonArray = resultObj.get("btry").getAsJsonArray();
-
+        jsonArray = resultObj.get("push_history").getAsJsonArray();
         for(int i = 0; i < jsonArray.size(); i++){
             System.out.println("TEST: "+jsonArray.get(i));
-            System.out.println((jsonArray.get(i).getAsJsonObject().get("btry_mdul_tempr_arr").toString()));
-            quick_cnt = jsonArray.get(i).getAsJsonObject().get("btry_mdul_tempr_arr").toString();
+            //System.out.println(jsonArray.get(i).getAsJsonObject().get("push_type"));
+            PushHistory pushHistory = new PushHistory(0,
+                    jsonArray.get(i).getAsJsonObject().get("push_type").toString(),
+                    jsonArray.get(i).getAsJsonObject().get("send_time").toString(),
+                    jsonArray.get(i).getAsJsonObject().get("send_msg").toString());
+            arrayList.add(pushHistory);
+        }
+
+
+        String get_btry = "http://192.168.56.1:80/get_btry.php";
+        URLConnector btry_thread = new URLConnector(get_btry);
+
+        btry_thread.start();
+        try{
+            btry_thread.join();
+            //System.out.println("waiting... for result");
+        }
+        catch(InterruptedException e){
+            System.out.println(e);
+        }
+
+        JsonObject btry_resultObj = btry_thread.getResult();
+        JsonArray btry_jsonArray = new JsonArray();
+
+        btry_jsonArray = btry_resultObj.get("btry").getAsJsonArray();
+
+        for(int i = 0; i < btry_jsonArray.size(); i++){
+            //System.out.println("TEST: "+btry_jsonArray.get(i));
+            //System.out.println((btry_jsonArray.get(i).getAsJsonObject().get("btry_mdul_tempr_arr").toString()));
+            quick_cnt = btry_jsonArray.get(i).getAsJsonObject().get("btry_mdul_tempr_arr").toString();
 
 //            list_temp.add(new Entry(i, ))
         }
@@ -137,6 +172,13 @@ public class StateFragment extends Fragment {
         View view = getView();
 
         if(view != null) {
+            //push_history
+            pushHistoryAdapter = new PushHistoryAdapter(arrayList);
+            recyclerView = (RecyclerView) getView().findViewById(R.id.push_history);
+            linearLayoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(pushHistoryAdapter);
+
             scatter_temp = view.findViewById(R.id.scatter_tempr);
             scatter_volt = view.findViewById(R.id.scatter_volts);
 
@@ -149,33 +191,6 @@ public class StateFragment extends Fragment {
 
 
 
-            //FCM token 받아옴
-            //cNnuuXz-To2ARwy-NVTR_F:APA91bE6EHUNYt2arLCUUFaGWTG6mNHnfNW1Dhtp2KrmZALY53PeZ84l40K59nLGzd7boHL_vtsGviD_zNBZ987a5uK46Zf90CwhKhTuEqAwllZ2cFI7mjfpSthjVc44M8dSovqKx34y
-//            Button token_button = view.findViewById(R.id.token_button);
-//
-//            token_button.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    //fcm token
-//                    FirebaseMessaging.getInstance().getToken()
-//                            .addOnCompleteListener(new OnCompleteListener<String>() {
-//                                @Override
-//                                public void onComplete(@NonNull Task<String> task) {
-//                                    if (!task.isSuccessful()){
-//                                        Log.w("SF", "Fetching FCM registration token failed", task.getException());
-//                                        return;
-//                                    }
-//                                    // Get new FCM registration token
-//                                    String token = task.getResult();
-//
-//                                    // Log and toast
-//                                    String msg = getString(R.string.msg_token_fmt, token);
-//                                    Log.d("SF", msg);
-//                                    Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                }
-//            });
         }
     }
 

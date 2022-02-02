@@ -4,11 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_baseline_bolt_24.xml" value="0.2985332182916307" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.10638297872340426" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_charge.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_map.xml" value="0.33" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_state.xml" value="0.25" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_state.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication/app/src/main/res/layout/push_history_list.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyApplication/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
       </map>

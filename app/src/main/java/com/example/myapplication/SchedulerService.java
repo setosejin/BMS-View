@@ -61,7 +61,7 @@ public class SchedulerService extends Service {
 
             System.out.println("NOTIFY");
             //토스트 띄우기
-            Toast.makeText(SchedulerService.this, "뜸?", Toast.LENGTH_LONG).show();
+//            Toast.makeText(SchedulerService.this, "뜸?", Toast.LENGTH_LONG).show();
         }
     };
 }

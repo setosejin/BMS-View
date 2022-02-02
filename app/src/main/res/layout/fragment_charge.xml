@@ -35,31 +35,18 @@
         android:layout_width="134dp"
         android:layout_height="136dp"
         android:layout_marginStart="48dp"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.github.mikephil.charting.charts.ScatterChart
         android:id="@+id/battery_volt"
         android:layout_width="145dp"
         android:layout_height="137dp"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toEndOf="@+id/battery_tempr" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/push_history"
-        android:layout_width="282dp"
-        android:layout_height="218dp"
-        android:scrollbarFadeDuration="0"
-        android:scrollbarSize="5dp"
-        android:scrollbarThumbVertical="@android:color/darker_gray"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/soc"
@@ -82,19 +69,8 @@
         app:layout_constraintBottom_toTopOf="@+id/battery_volt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.626"
-        app:layout_constraintStart_toEndOf="@+id/soc"
-        app:layout_constraintTop_toBottomOf="@+id/line_chart_soh"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/soc"/>
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="391dp"
-        android:layout_height="1dp"
-        android:layout_marginBottom="60dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/push_history"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

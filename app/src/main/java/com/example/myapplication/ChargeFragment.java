@@ -10,9 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -24,11 +21,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,13 +40,6 @@ public class ChargeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ArrayList<PushHistory> arrayList;
-
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private PushHistoryAdapter pushHistoryAdapter;
-    private LinearLayoutManager linearLayoutManager;
 
     private LineChart lineChart_soc, lineChart_soh;
     List<Entry> entryList_soc = new ArrayList<>();
@@ -91,42 +78,15 @@ public class ChargeFragment extends Fragment {
         }
 //        textView = (TextView) getView().findViewById(R.id.textView_test);
 
-        arrayList = new ArrayList<>();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        String test = "http://192.168.56.1:80/get_push_history.php";
-        URLConnector thread = new URLConnector(test);
-
-        thread.start();
-        try{
-            thread.join();
-            //System.out.println("waiting... for result");
-        }
-        catch(InterruptedException e){
-            System.out.println(e);
-        }
-
-        JsonObject resultObj = thread.getResult();
-        JsonArray jsonArray = new JsonArray();
-
-        jsonArray = resultObj.get("push_history").getAsJsonArray();
-        for(int i = 0; i < jsonArray.size(); i++){
-            System.out.println("TEST: "+jsonArray.get(i));
-            //System.out.println(jsonArray.get(i).getAsJsonObject().get("push_type"));
-            PushHistory pushHistory = new PushHistory(0,
-                    jsonArray.get(i).getAsJsonObject().get("push_type").toString(),
-                    jsonArray.get(i).getAsJsonObject().get("send_time").toString(),
-                    jsonArray.get(i).getAsJsonObject().get("send_msg").toString());
-            arrayList.add(pushHistory);
-        }
-
-
-        String test_chrg = "http://192.168.56.1:80/get_chrg.php";
-        URLConnector thread_chrg = new URLConnector(test_chrg);
+        String get_chrg = "http://192.168.56.1:80/get_chrg.php";
+        URLConnector thread_chrg = new URLConnector(get_chrg);
 
         thread_chrg.start();
         try{
@@ -243,12 +203,6 @@ public class ChargeFragment extends Fragment {
             lineChart_soh.invalidate();
 
 
-            //push_history
-            pushHistoryAdapter = new PushHistoryAdapter(arrayList);
-            recyclerView = (RecyclerView) getView().findViewById(R.id.push_history);
-            linearLayoutManager = new LinearLayoutManager(getContext());
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(pushHistoryAdapter);
         }
     }
 }

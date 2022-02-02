@@ -86,26 +86,26 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        String test = "http://192.168.56.1:80/get_soc.php";
-        URLConnector thread = new URLConnector(test);
+        String get_soc = "http://192.168.56.1:80/get_soc.php";
+        URLConnector soc_thread = new URLConnector(get_soc);
 
-        thread.start();
+        soc_thread.start();
         try{
-            thread.join();
+            soc_thread.join();
             //System.out.println("waiting... for result");
         }
         catch(InterruptedException e){
             System.out.println(e);
         }
 
-        JsonObject resultObj = thread.getResult();
-        JsonArray jsonArray = new JsonArray();
+        JsonObject soc_resultObj = soc_thread.getResult();
+        JsonArray soc_jsonArray = new JsonArray();
 
-        jsonArray = resultObj.get("soc").getAsJsonArray();
-        for(int i = 0; i < jsonArray.size(); i++){
-            System.out.println("TEST: "+jsonArray.get(i));
-            System.out.println((jsonArray.get(i).getAsJsonObject().get("soc_real").toString()));
-            charge_percent = jsonArray.get(i).getAsJsonObject().get("soc_real").toString();
+        soc_jsonArray = soc_resultObj.get("soc").getAsJsonArray();
+        for(int i = 0; i < soc_jsonArray.size(); i++){
+            System.out.println("TEST: "+soc_jsonArray.get(i));
+            System.out.println((soc_jsonArray.get(i).getAsJsonObject().get("soc_real").toString()));
+            charge_percent = soc_jsonArray.get(i).getAsJsonObject().get("soc_real").toString();
         }
 
 

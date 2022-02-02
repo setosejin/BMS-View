@@ -41,11 +41,11 @@ class URLConnector extends Thread {
                 conn.setRequestMethod("GET");
                 conn.setConnectTimeout(10000);
                 conn.setReadTimeout(10000);
-                System.out.println("CONN" + conn);
+//                System.out.println("CONN " + conn);
                 conn.connect();
 
                 int resCode = conn.getResponseCode();
-                System.out.println("RESCODE: " + resCode);
+//                System.out.println("RESCODE: " + resCode);
                 if (resCode == HttpURLConnection.HTTP_OK) { //200
 
 //                    //InputStream으로 읽어들인다.
@@ -72,9 +72,9 @@ class URLConnector extends Thread {
 //                    outputStr = outputStr.substring(1, output.length()-2);
 //                    outputStr.replace("[", "");
 //                    outputStr.replace("]", "");
-                    System.out.println("outputStr: "+outputStr);
+//                    System.out.println("outputStr: "+outputStr);
                     JsonObject jobj = new Gson().fromJson(outputStr, JsonObject.class);
-                    System.out.println("JsonObject: "+jobj.toString());
+//                    System.out.println("JsonObject: "+jobj.toString());
                     reader.close();
                     result = jobj;
                 }
