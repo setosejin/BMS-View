@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -53,6 +54,8 @@ public class ChargeFragment extends Fragment {
     List<Entry> entryList_soc = new ArrayList<>();
     List<Entry> entryList_soh = new ArrayList<>();
 
+    private ScatterChart scatterChart;
+    List<Entry> entryList_temp = new ArrayList<>();
 
     public ChargeFragment() {
         // Required empty public constructor
@@ -111,9 +114,17 @@ public class ChargeFragment extends Fragment {
         jsonArray_chrg = resultObj_chrg.get("chrg").getAsJsonArray();
 
         quick_charge = jsonArray_chrg.get(0).getAsJsonObject().get("quick_recharge_cnt").toString();
+        quick_charge = quick_charge.replace("\"", "");
+        quick_charge = quick_charge + "회";
         slow_charge = jsonArray_chrg.get(0).getAsJsonObject().get("slow_recharge_cnt").toString();
+        slow_charge = slow_charge.replace("\"", "");
+        slow_charge = slow_charge + "회";
         distance = jsonArray_chrg.get(0).getAsJsonObject().get("odometer").toString();
+        distance = distance.replace("\"", "");
+        distance = distance + "km";
         time = jsonArray_chrg.get(0).getAsJsonObject().get("mvmn_time").toString();
+        time = time.replace("\"", "");
+        time = time + "시간";
 
         for(int i = 0; i < 100; i++){
             //System.out.println("TEST: "+jsonArray_chrg.get(i));
@@ -141,18 +152,23 @@ public class ChargeFragment extends Fragment {
 //            textView = view.findViewById(R.id.textView_test);
 //            textView.setText("modified");
             tv_distance = view.findViewById(R.id.distance2);
+            tv_distance.bringToFront();
             tv_distance.setText(distance);
 
             tv_quick_charge = view.findViewById(R.id.quick_charge_num);
+            tv_quick_charge.bringToFront();
             tv_quick_charge.setText(quick_charge);
 
             tv_slow_charge = view.findViewById(R.id.slow_charge_num);
+            tv_slow_charge.bringToFront();
             tv_slow_charge.setText(slow_charge);
 
             tv_fuel = view.findViewById(R.id.fuel2);
+            tv_fuel.bringToFront();
             tv_fuel.setText("6.1km/kWh");
 
             tv_time = view.findViewById(R.id.time2);
+            tv_time.bringToFront();
             tv_time.setText(time);
 
             refresh_button = view.findViewById(R.id.charge_refresh);
@@ -167,57 +183,57 @@ public class ChargeFragment extends Fragment {
             }) ;
 
             //lineChart
-            lineChart_soc = (LineChart) view.findViewById(R.id.line_chart_soc);
+//            lineChart_soc = (LineChart) view.findViewById(R.id.line_chart_soc);
             lineChart_soh = (LineChart) view.findViewById(R.id.line_chart_soh);
 
-            LineDataSet lineDataSet_soc = new LineDataSet(entryList_soc, "속성명1");
-            LineDataSet lineDataSet_soh = new LineDataSet(entryList_soh, "속성명2");
+//            LineDataSet lineDataSet_soc = new LineDataSet(entryList_soc, "시간");
+            LineDataSet lineDataSet_soh = new LineDataSet(entryList_soh, "시간");
 
-            lineDataSet_soc.setLineWidth(2);
-            lineDataSet_soc.setCircleRadius(3);
-            lineDataSet_soc.setCircleColor(Color.parseColor("#FFA1B4DC"));
-            //lineDataSet_soc.setCircleColorHole(Color.BLUE);
-            lineDataSet_soc.setColor(Color.parseColor("#FFA1B4DC"));
-            lineDataSet_soc.setDrawCircleHole(true);
-            lineDataSet_soc.setDrawCircles(true);
-            lineDataSet_soc.setDrawHorizontalHighlightIndicator(false);
-            lineDataSet_soc.setDrawHighlightIndicators(false);
-            lineDataSet_soc.setDrawValues(false);
+//            lineDataSet_soc.setLineWidth(2);
+//            lineDataSet_soc.setCircleRadius(3);
+//            lineDataSet_soc.setCircleColor(Color.parseColor("#FF2CBBB7"));
+//            //lineDataSet_soc.setCircleColorHole(Color.BLUE);
+//            lineDataSet_soc.setColor(Color.parseColor("#FF2CBBB7"));
+//            lineDataSet_soc.setDrawCircleHole(true);
+//            lineDataSet_soc.setDrawCircles(true);
+//            lineDataSet_soc.setDrawHorizontalHighlightIndicator(false);
+//            lineDataSet_soc.setDrawHighlightIndicators(false);
+//            lineDataSet_soc.setDrawValues(false);
 
             lineDataSet_soh.setLineWidth(2);
             lineDataSet_soh.setCircleRadius(3);
-            lineDataSet_soh.setCircleColor(Color.parseColor("#FFA1B4DC"));
+            lineDataSet_soh.setCircleColor(Color.parseColor("#FF2CBBB7"));
             //lineDataSet_soh.setCircleColorHole(Color.BLUE);
-            lineDataSet_soh.setColor(Color.parseColor("#FFA1B4DC"));
+            lineDataSet_soh.setColor(Color.parseColor("#FF2CBBB7"));
             lineDataSet_soh.setDrawCircleHole(true);
             lineDataSet_soh.setDrawCircles(true);
             lineDataSet_soh.setDrawHorizontalHighlightIndicator(false);
             lineDataSet_soh.setDrawHighlightIndicators(false);
             lineDataSet_soh.setDrawValues(false);
 
-            LineData lineData_soc = new LineData();
-            lineData_soc.addDataSet(lineDataSet_soc);
-            lineChart_soc.setData(lineData_soc);
+//            LineData lineData_soc = new LineData();
+//            lineData_soc.addDataSet(lineDataSet_soc);
+//            lineChart_soc.setData(lineData_soc);
 
             LineData lineData_soh = new LineData();
             lineData_soh.addDataSet(lineDataSet_soh);
             lineChart_soh.setData(lineData_soh);
 
-            XAxis xAxis = lineChart_soc.getXAxis();
-            //xAxis.setLabelCount(10, true);
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setTextColor(Color.BLACK);
-            xAxis.enableGridDashedLine(8, 24, 0);
-            YAxis yLAxis = lineChart_soc.getAxisLeft();
-            yLAxis.setTextColor(Color.BLACK);
-            YAxis yRAxis = lineChart_soc.getAxisRight();
-            yRAxis.setDrawLabels(false);
-            yRAxis.setDrawAxisLine(false);
-            yRAxis.setDrawGridLines(false);
-
-            lineChart_soc.setDoubleTapToZoomEnabled(false);
-            lineChart_soc.setDrawGridBackground(false);
-            lineChart_soc.animateY(2000, Easing.EasingOption.EaseInCubic);
+//            XAxis xAxis = lineChart_soc.getXAxis();
+//            //xAxis.setLabelCount(10, true);
+//            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+//            xAxis.setTextColor(Color.BLACK);
+//            xAxis.enableGridDashedLine(8, 24, 0);
+//            YAxis yLAxis = lineChart_soc.getAxisLeft();
+//            yLAxis.setTextColor(Color.BLACK);
+//            YAxis yRAxis = lineChart_soc.getAxisRight();
+//            yRAxis.setDrawLabels(false);
+//            yRAxis.setDrawAxisLine(false);
+//            yRAxis.setDrawGridLines(false);
+//
+//            lineChart_soc.setDoubleTapToZoomEnabled(false);
+//            lineChart_soc.setDrawGridBackground(false);
+//            lineChart_soc.animateY(20, Easing.EasingOption.EaseInCubic);
 
             XAxis xAxis_soh = lineChart_soh.getXAxis();
             xAxis_soh.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -232,9 +248,9 @@ public class ChargeFragment extends Fragment {
 
             lineChart_soh.setDoubleTapToZoomEnabled(false);
             lineChart_soh.setDrawGridBackground(false);
-            lineChart_soh.animateY(2000, Easing.EasingOption.EaseInCubic);
+            lineChart_soh.animateY(20, Easing.EasingOption.EaseInCubic);
 
-            lineChart_soc.invalidate();
+//            lineChart_soc.invalidate();
             lineChart_soh.invalidate();
 
 

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="홈"
+    <item android:title="Home"
         android:icon="@drawable/ic_baseline_home_24"
         android:id="@+id/home"/>
-    <item android:title="충전"
-        android:icon="@drawable/baseline_dashboard_black_24dp"
-        android:id="@+id/charge"/>
-    <item android:title="배터리"
+    <item android:title="Battery"
         android:icon="@drawable/baseline_leaderboard_black_24dp"
+        android:id="@+id/charge"/>
+    <item android:title="Push"
+        android:icon="@drawable/baseline_notifications_active_black_24dp"
         android:id="@+id/state"/>
-    <item android:title="지도"
+    <item android:title="Map"
         android:icon="@drawable/ic_baseline_pin_drop_24"
         android:id="@+id/map"/>
 </menu>

@@ -1,9 +1,11 @@
 package com.example.myapplication;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,7 +61,7 @@ public class StateFragment extends Fragment {
     private String mParam2;
 
     TextView textView;
-    String quick_cnt;
+    String temp, volt;
 
 
     private RecyclerView recyclerView;
@@ -71,7 +73,11 @@ public class StateFragment extends Fragment {
     ArrayList<Entry> list_temp = new ArrayList<>();
 
     private ScatterChart scatter_temp, scatter_volt;
+    private LineChart lineChart_temp, lineChart_volt;
     List<ScatterDataSet> set_temp = new ArrayList<>();
+    List<Entry> entryList_temp = new ArrayList<>();
+    List<Entry> entryList_volt = new ArrayList<>();
+
     public static Button refresh_button;
 
     public StateFragment() {
@@ -103,10 +109,11 @@ public class StateFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        quick_cnt = new String();
+        temp = new String();
         arrayList = new ArrayList<>();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -129,8 +136,6 @@ public class StateFragment extends Fragment {
 
         jsonArray = resultObj.get("push_history").getAsJsonArray();
         for(int i = 0; i < jsonArray.size(); i++){
-            System.out.println("TEST: "+jsonArray.get(i));
-            //System.out.println(jsonArray.get(i).getAsJsonObject().get("push_type"));
             PushHistory pushHistory = new PushHistory(0,
                     jsonArray.get(i).getAsJsonObject().get("push_type").toString(),
                     jsonArray.get(i).getAsJsonObject().get("send_time").toString(),
@@ -156,12 +161,17 @@ public class StateFragment extends Fragment {
 
         btry_jsonArray = btry_resultObj.get("btry").getAsJsonArray();
 
-        for(int i = 0; i < btry_jsonArray.size(); i++){
-            //System.out.println("TEST: "+btry_jsonArray.get(i));
-            //System.out.println((btry_jsonArray.get(i).getAsJsonObject().get("btry_mdul_tempr_arr").toString()));
-            quick_cnt = btry_jsonArray.get(i).getAsJsonObject().get("btry_mdul_tempr_arr").toString();
-
-//            list_temp.add(new Entry(i, ))
+        temp = btry_jsonArray.get(0).getAsJsonObject().get("btry_mdul_tempr_arr").toString().replace("\"{}", "");
+        long count_temp = temp.chars().filter(ch -> ch == ',').count() + 1;
+//        System.out.println(temp);
+        for(int i = 0; i < count_temp; i++){
+//        entryList_temp.add(new Entry(i, ))
+        }
+        volt = btry_jsonArray.get(0).getAsJsonObject().get("btry_cells_arr").toString().replace("\"{}", "");
+        long count_volt = volt.chars().filter(ch -> ch == ',').count() + 1;
+//        System.out.println(volt);
+        for(int i = 0; i < count_volt; i++){
+//        entryList_temp.add(new Entry(i, ))
         }
 
         return inflater.inflate(R.layout.fragment_state, container, false);
@@ -183,6 +193,8 @@ public class StateFragment extends Fragment {
                     System.out.println("Btn Clicked");
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.detach(f).attach(f).commit();
+                    //push_history clear
+                    arrayList.clear();
                     System.out.println("Refreshed");
                 }
             }) ;
@@ -195,13 +207,6 @@ public class StateFragment extends Fragment {
             recyclerView.setAdapter(pushHistoryAdapter);
 
 
-            //scatter plot
-            scatter_temp = view.findViewById(R.id.scatter_tempr);
-            scatter_volt = view.findViewById(R.id.scatter_volts);
-
-            Legend l = scatter_temp.getLegend();
-            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
 
 
 //            scatter_temp.setData();

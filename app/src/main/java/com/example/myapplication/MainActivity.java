@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private Button button;
     private Button token_button;
     public static String android_token;
+    public static String selected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +78,19 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()){
                     case R.id.home:
+                        selected = "home";
                         fragment = new HomeFragment();
                         break;
                     case R.id.charge:
+                        selected = "charge";
                         fragment = new ChargeFragment();
                         break;
                     case R.id.map:
+                        selected = "map";
                         fragment = new MapFragment();
                         break;
                     case R.id.state:
+                        selected = "state";
                         fragment = new StateFragment();
                         break;
                 }

@@ -10,27 +10,104 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="28dp"
-        android:text="현재 주행시간"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/textview_rounding_box_red"
+        android:text="현재 전비"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+    <TextView
+        android:id="@+id/fuel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="164dp"
+        android:background="@drawable/textview_rounding_box"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+        app:layout_constraintHorizontal_bias="0.606"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="164dp"
+        android:background="@drawable/textview_rounding_box"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintStart_toEndOf="@+id/imageView7" />
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="164dp"
+        android:background="@drawable/textview_rounding_box"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+        app:layout_constraintStart_toEndOf="@+id/imageView6" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="0dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="124dp"
+        android:src="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider4"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="0dp"
         android:layout_height="178dp"
-        android:layout_marginEnd="124dp"
+        android:layout_marginEnd="120dp"
         android:src="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider4"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/textview_rounding_box_red"
+        android:text="현재 주행시간"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="31dp"
+        android:background="@drawable/textview_rounding_box_red"
+        android:text="현재 주행거리"
+        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
     <View
         android:id="@+id/divider4"
@@ -52,90 +129,93 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.362" />
+        app:layout_constraintVertical_bias="0.295" />
 
     <TextView
         android:id="@+id/my_car_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/textview_rounding_box_red"
         android:text="내 차 정보"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/my_car_name"
         app:layout_constraintEnd_toStartOf="@+id/car_charge_status"
-        app:layout_constraintHorizontal_bias="0.27"
+        app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/update_time"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
     <TextView
         android:id="@+id/my_car_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/textview_rounding_box_red"
         android:text="기아 EV6"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/charge_percent"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/car_key_status"
-        app:layout_constraintHorizontal_bias="0.328"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_car_info" />
 
     <TextView
         android:id="@+id/car_charge_status"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="4dp"
-        android:background="@color/kt"
+        android:layout_width="115dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="13dp"
+        android:background="@drawable/textview_rounding_box"
         android:text="충전중"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/car_key_status"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateBtn"
-        app:layout_constraintVertical_bias="0.846" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="28dp"
-        android:src="@drawable/ic_baseline_time_to_leave_24"
-        app:layout_constraintBottom_toBottomOf="@+id/car_key_status"
-        app:layout_constraintEnd_toStartOf="@+id/car_key_status"
-        app:layout_constraintTop_toBottomOf="@+id/car_charge_status"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
     <TextView
         android:id="@+id/car_key_status"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="44dp"
-        android:background="@color/kt"
+        android:layout_width="112dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="21dp"
+        android:background="@drawable/textview_rounding_box"
         android:text="시동 OFF"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/my_car_now"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="27dp"
-        android:layout_height="26dp"
-        android:layout_marginEnd="32dp"
-        android:src="@drawable/baseline_electrical_services_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
-        app:layout_constraintEnd_toStartOf="@+id/car_charge_status"
-        app:layout_constraintTop_toBottomOf="@+id/updateBtn"
-        app:layout_constraintVertical_bias="0.823" />
+    <TextView
+        android:id="@+id/update"
+        android:layout_width="170dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+        android:text="최근 업데이트 일시:"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.286"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/update_time"
+        android:layout_width="170dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="48dp"
+        android:text="시간"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.286"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/updateBtn"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:paddingLeft="0dp"
@@ -145,30 +225,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toEndOf="@+id/update_time"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/update_time"
-        android:layout_width="170dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="68dp"
-        android:text="시간"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.286"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/update"
-        android:layout_width="170dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="36dp"
-        android:text="최근 업데이트 일시:"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.286"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -181,140 +237,119 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.725" />
+        app:layout_constraintVertical_bias="0.71" />
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/charge_chart"
-        android:layout_width="174dp"
-        android:layout_height="165dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.989"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.527" />
+        app:layout_constraintVertical_bias="0.53">
+
+    </com.github.mikephil.charting.charts.PieChart>
 
     <TextView
         android:id="@+id/charge_percent"
-        android:layout_width="53dp"
-        android:layout_height="35dp"
+        android:layout_width="105dp"
+        android:layout_height="49dp"
+        android:background="@drawable/textview_rounding_box"
         android:text="%"
         android:textColor="@color/black"
-        android:textSize="28sp"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.376"
+        app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.349" />
+        app:layout_constraintVertical_bias="0.603" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="184dp"
         android:text="현재 충전량:"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/charge_percent"
-        app:layout_constraintHorizontal_bias="0.716"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="내 차 상태:"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/my_car_now"
-        app:layout_constraintHorizontal_bias="0.809"
-        app:layout_constraintStart_toEndOf="@+id/charge_percent"
         app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     <TextView
         android:id="@+id/my_car_now"
-        android:layout_width="42dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="57dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/textview_rounding_box"
         android:text="현재 등급"
         android:textColor="@color/black"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/charge_chart"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.877"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.923"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="228dp"
+        android:layout_marginTop="44dp"
+        android:text="관리 등급:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="0dp"
-        android:layout_height="178dp"
-        android:layout_marginStart="128dp"
-        android:src="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/imageView11"
+        android:layout_width="68dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/electric_car"
+        app:layout_constraintEnd_toStartOf="@+id/my_car_info"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider4"
+        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="58dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="67dp"
+        android:src="@drawable/charging_1"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/fuel"
+        android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="164dp"
-        android:text="TextView"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView6"
-        app:layout_constraintHorizontal_bias="0.457"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="67dp"
+        android:background="@drawable/textview_rounding_box_blue"
+        android:text="내 차 상태"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="25dp"
+        android:src="@drawable/flash"
+        app:layout_constraintBottom_toTopOf="@+id/divider4"
+        app:layout_constraintEnd_toStartOf="@+id/charge_percent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="164dp"
-        android:text="TextView"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView7"
-        app:layout_constraintHorizontal_bias="0.469"
-        app:layout_constraintStart_toEndOf="@+id/imageView6" />
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="164dp"
-        android:text="TextView"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.212"
-        app:layout_constraintStart_toEndOf="@+id/imageView7" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="38dp"
-        android:text="현재 전비"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider4" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="31dp"
-        android:text="현재 주행거리"
-        app:layout_constraintEnd_toStartOf="@+id/imageView7"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

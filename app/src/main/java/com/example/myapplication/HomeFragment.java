@@ -141,8 +141,11 @@ public class HomeFragment extends Fragment {
 
             distance_ = soc_jsonArray.get(i).getAsJsonObject().get("odometer").toString();
             time_ = soc_jsonArray.get(i).getAsJsonObject().get("mvmn_time").toString();
+            safety_grade = safety_grade.replace("\"", "");
             distance_ = distance_.replace("\"", "");
+            distance_ = distance_ + "km";
             time_ = time_.replace("\"", "");
+            time_ = time_ + "분";
         }
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -179,15 +182,19 @@ public class HomeFragment extends Fragment {
             }) ;
 
             textView = view.findViewById(R.id.charge_percent);
+            textView.bringToFront();
             textView.setText(charge_percent);
 
             charge_status = view.findViewById(R.id.car_charge_status);
+            charge_status.bringToFront();
             charge_status.setText(charge);
 
             key_status = view.findViewById(R.id.car_key_status);
+            key_status.bringToFront();
             key_status.setText(key);
 
             car_now = view.findViewById(R.id.my_car_now);
+            car_now.bringToFront();
             car_now.setText(safety_grade);
 
             distance = view.findViewById(R.id.distance);
@@ -202,26 +209,30 @@ public class HomeFragment extends Fragment {
             ArrayList colors = new ArrayList();
 
             PieChart pieChart = view.findViewById(R.id.charge_chart);
+            pieChart.bringToFront();
             ArrayList charge_per = new ArrayList();
             float c_p = 0;
             charge_percent = charge_percent.substring(0, charge_percent.length() - 1);
-            System.out.println(charge_percent);
+//            System.out.println(charge_percent);
             c_p = Float.parseFloat(charge_percent);
-            System.out.println("Float: " + c_p);
+//            System.out.println("Float: " + c_p);
 
             if(c_p > 80){
-                colors.add(Color.parseColor("#0000ff"));
+                colors.add(Color.parseColor("#1682BF"));
             }
-            else if(c_p > 50){
-                colors.add(Color.parseColor("#00ff00"));
+            else if(c_p > 60){
+                colors.add(Color.parseColor("#3C8F2C"));
+            }
+            else if(c_p > 40){
+                colors.add(Color.parseColor("#D0B25E"));
             }
             else if(c_p > 20){
-                colors.add(Color.parseColor("#ffff00"));
+                colors.add(Color.parseColor("#D6652F"));
             }
             else{
-                colors.add(Color.parseColor("#ff0000"));
+                colors.add(Color.parseColor("#BF5050"));
             }
-            colors.add(Color.parseColor("#ffffff"));
+            colors.add(Color.parseColor("#dddddd"));
 
 
             charge_per.add(new PieEntry(c_p, 0));
