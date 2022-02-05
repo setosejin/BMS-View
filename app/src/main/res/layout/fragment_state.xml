@@ -88,7 +88,7 @@
         android:background="@drawable/textview_rounding_box"
         android:text="1회"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/push_charge2"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
@@ -103,7 +103,7 @@
         android:background="@drawable/textview_rounding_box"
         android:text="2회"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/push_charge3"
         app:layout_constraintStart_toEndOf="@+id/push_charge"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
@@ -112,13 +112,13 @@
         android:id="@+id/quick_cnt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="544dp"
+        android:layout_marginBottom="548dp"
         android:background="@drawable/textview_rounding_box_blue"
         android:text="푸시 이력"
-        android:textSize="20dp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
@@ -149,13 +149,13 @@
         android:id="@+id/quick_cnt3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="712dp"
+        android:layout_marginBottom="708dp"
         android:background="@drawable/textview_rounding_box_red"
         android:text="푸시 종류별 횟수"
-        android:textSize="20dp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.209"
+        app:layout_constraintHorizontal_bias="0.235"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -204,7 +204,7 @@
         android:background="@drawable/textview_rounding_box"
         android:text="3회"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/push_charge2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />

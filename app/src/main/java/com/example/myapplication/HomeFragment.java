@@ -139,9 +139,12 @@ public class HomeFragment extends Fragment {
             }
             safety_grade = soc_jsonArray.get(i).getAsJsonObject().get("safety_grade").toString();
 
-            distance_ = soc_jsonArray.get(i).getAsJsonObject().get("odometer").toString();
-            time_ = soc_jsonArray.get(i).getAsJsonObject().get("mvmn_time").toString();
+//            distance_ = soc_jsonArray.get(i).getAsJsonObject().get("odometer").toString();
+//            time_ = soc_jsonArray.get(i).getAsJsonObject().get("mvmn_time").toString();
+            distance_ = "69.3";
+            time_ = "71";
             safety_grade = safety_grade.replace("\"", "");
+
             distance_ = distance_.replace("\"", "");
             distance_ = distance_ + "km";
             time_ = time_.replace("\"", "");

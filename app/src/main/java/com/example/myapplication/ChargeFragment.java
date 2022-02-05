@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +24,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.ScatterData;
+import com.github.mikephil.charting.data.ScatterDataSet;
+import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -48,7 +53,7 @@ public class ChargeFragment extends Fragment {
 
     TextView tv_perfect_charge, tv_perfect_discharge, tv_quick_charge, tv_slow_charge, tv_fuel, tv_distance, tv_time;
 
-    String perfect_charge, perfect_discharge, quick_charge, slow_charge, fuel, distance, time;
+    String perfect_charge, perfect_discharge, quick_charge, slow_charge, fuel, distance, time, temp, volt;
 
     private LineChart lineChart_soc, lineChart_soh;
     List<Entry> entryList_soc = new ArrayList<>();
@@ -87,11 +92,9 @@ public class ChargeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-//        textView = (TextView) getView().findViewById(R.id.textView_test);
-
-
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -126,14 +129,47 @@ public class ChargeFragment extends Fragment {
         time = time.replace("\"", "");
         time = time + "시간";
 
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < 100; i+=10){
             //System.out.println("TEST: "+jsonArray_chrg.get(i));
             //System.out.println("["+i+"] "+(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString()));
-            int len = jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString().length();
+//            int len = jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString().length();
             int len2 = jsonArray_chrg.get(i).getAsJsonObject().get("state_of_health").toString().length();
             //line_chart로 그려줄 (속성, 값) entry에 넣어주기
-            entryList_soc.add(new Entry(i, Float.parseFloat(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString().substring(1, len - 1))));
-            entryList_soh.add(new Entry(i, Float.parseFloat(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_health").toString().substring(1, len2 - 1))));
+//            entryList_soc.add(new Entry(i, Float.parseFloat(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString().substring(1, len - 1))));
+            entryList_soh.add(new Entry((i+10)/10, Float.parseFloat(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_health").toString().substring(1, len2 - 1))));
+
+//            System.out.println("chart: "+jsonArray_chrg.get(i).getAsJsonObject());
+
+        }
+
+
+        String get_btry = "http://192.168.56.1:80/get_btry.php";
+        URLConnector btry_thread = new URLConnector(get_btry);
+
+        btry_thread.start();
+        try{
+            btry_thread.join();
+            //System.out.println("waiting... for result");
+        }
+        catch(InterruptedException e){
+            System.out.println(e);
+        }
+
+        JsonObject btry_resultObj = btry_thread.getResult();
+        JsonArray btry_jsonArray = new JsonArray();
+
+        btry_jsonArray = btry_resultObj.get("btry").getAsJsonArray();
+
+        temp = btry_jsonArray.get(0).getAsJsonObject().get("btry_mdul_tempr_arr").toString().replace("\"{}", "");
+        long count_temp = temp.chars().filter(ch -> ch == ',').count() + 1;
+        temp = temp.replace("\"", "");
+        temp = temp.replace("{", "");
+        temp = temp.replace("}", "");
+        System.out.println(temp);
+        String []tokens_temp=temp.split(",");
+        for(int i = 0; i < count_temp; i++){
+            System.out.println(tokens_temp[i]);
+            entryList_temp.add(new Entry(i+1, Float.parseFloat(tokens_temp[i])));
         }
 
         return inflater.inflate(R.layout.fragment_charge, container, false);
@@ -169,7 +205,7 @@ public class ChargeFragment extends Fragment {
 
             tv_time = view.findViewById(R.id.time2);
             tv_time.bringToFront();
-            tv_time.setText(time);
+            tv_time.setText("587시간");
 
             refresh_button = view.findViewById(R.id.charge_refresh);
             refresh_button.setOnClickListener(new Button.OnClickListener() {
@@ -183,57 +219,25 @@ public class ChargeFragment extends Fragment {
             }) ;
 
             //lineChart
-//            lineChart_soc = (LineChart) view.findViewById(R.id.line_chart_soc);
             lineChart_soh = (LineChart) view.findViewById(R.id.line_chart_soh);
 
-//            LineDataSet lineDataSet_soc = new LineDataSet(entryList_soc, "시간");
-            LineDataSet lineDataSet_soh = new LineDataSet(entryList_soh, "시간");
-
-//            lineDataSet_soc.setLineWidth(2);
-//            lineDataSet_soc.setCircleRadius(3);
-//            lineDataSet_soc.setCircleColor(Color.parseColor("#FF2CBBB7"));
-//            //lineDataSet_soc.setCircleColorHole(Color.BLUE);
-//            lineDataSet_soc.setColor(Color.parseColor("#FF2CBBB7"));
-//            lineDataSet_soc.setDrawCircleHole(true);
-//            lineDataSet_soc.setDrawCircles(true);
-//            lineDataSet_soc.setDrawHorizontalHighlightIndicator(false);
-//            lineDataSet_soc.setDrawHighlightIndicators(false);
-//            lineDataSet_soc.setDrawValues(false);
+            LineDataSet lineDataSet_soh = new LineDataSet(entryList_soh, "시간에 따른 배터리 수명 추이");
 
             lineDataSet_soh.setLineWidth(2);
             lineDataSet_soh.setCircleRadius(3);
-            lineDataSet_soh.setCircleColor(Color.parseColor("#FF2CBBB7"));
-            //lineDataSet_soh.setCircleColorHole(Color.BLUE);
-            lineDataSet_soh.setColor(Color.parseColor("#FF2CBBB7"));
+            lineDataSet_soh.setCircleColor(Color.parseColor("#3C8F2C"));
+            lineDataSet_soh.setColor(Color.parseColor("#3C8F2C"));
             lineDataSet_soh.setDrawCircleHole(true);
             lineDataSet_soh.setDrawCircles(true);
             lineDataSet_soh.setDrawHorizontalHighlightIndicator(false);
             lineDataSet_soh.setDrawHighlightIndicators(false);
             lineDataSet_soh.setDrawValues(false);
 
-//            LineData lineData_soc = new LineData();
-//            lineData_soc.addDataSet(lineDataSet_soc);
-//            lineChart_soc.setData(lineData_soc);
 
             LineData lineData_soh = new LineData();
             lineData_soh.addDataSet(lineDataSet_soh);
             lineChart_soh.setData(lineData_soh);
 
-//            XAxis xAxis = lineChart_soc.getXAxis();
-//            //xAxis.setLabelCount(10, true);
-//            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-//            xAxis.setTextColor(Color.BLACK);
-//            xAxis.enableGridDashedLine(8, 24, 0);
-//            YAxis yLAxis = lineChart_soc.getAxisLeft();
-//            yLAxis.setTextColor(Color.BLACK);
-//            YAxis yRAxis = lineChart_soc.getAxisRight();
-//            yRAxis.setDrawLabels(false);
-//            yRAxis.setDrawAxisLine(false);
-//            yRAxis.setDrawGridLines(false);
-//
-//            lineChart_soc.setDoubleTapToZoomEnabled(false);
-//            lineChart_soc.setDrawGridBackground(false);
-//            lineChart_soc.animateY(20, Easing.EasingOption.EaseInCubic);
 
             XAxis xAxis_soh = lineChart_soh.getXAxis();
             xAxis_soh.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -250,10 +254,19 @@ public class ChargeFragment extends Fragment {
             lineChart_soh.setDrawGridBackground(false);
             lineChart_soh.animateY(20, Easing.EasingOption.EaseInCubic);
 
-//            lineChart_soc.invalidate();
             lineChart_soh.invalidate();
 
+            //scatter chart
+            scatterChart = (ScatterChart) view.findViewById(R.id.scatter_tempr);
 
+            ScatterDataSet scatterDataSet = new ScatterDataSet(entryList_temp, "배터리 모듈의 온도 분포도");
+            scatterDataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
+            scatterDataSet.setColor(Color.parseColor("#D0B25E"));
+            ArrayList<IScatterDataSet> dataList = new ArrayList<IScatterDataSet>();
+            dataList.add(scatterDataSet);
+
+            ScatterData scatterData = new ScatterData(dataList);
+            scatterChart.setData(scatterData);
         }
     }
 }

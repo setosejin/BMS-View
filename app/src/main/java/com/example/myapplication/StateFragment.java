@@ -70,13 +70,6 @@ public class StateFragment extends Fragment {
     private PushHistoryAdapter pushHistoryAdapter;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<PushHistory> arrayList;
-    ArrayList<Entry> list_temp = new ArrayList<>();
-
-    private ScatterChart scatter_temp, scatter_volt;
-    private LineChart lineChart_temp, lineChart_volt;
-    List<ScatterDataSet> set_temp = new ArrayList<>();
-    List<Entry> entryList_temp = new ArrayList<>();
-    List<Entry> entryList_volt = new ArrayList<>();
 
     public static Button refresh_button;
 
@@ -143,37 +136,6 @@ public class StateFragment extends Fragment {
             arrayList.add(pushHistory);
         }
 
-
-        String get_btry = "http://192.168.56.1:80/get_btry.php";
-        URLConnector btry_thread = new URLConnector(get_btry);
-
-        btry_thread.start();
-        try{
-            btry_thread.join();
-            //System.out.println("waiting... for result");
-        }
-        catch(InterruptedException e){
-            System.out.println(e);
-        }
-
-        JsonObject btry_resultObj = btry_thread.getResult();
-        JsonArray btry_jsonArray = new JsonArray();
-
-        btry_jsonArray = btry_resultObj.get("btry").getAsJsonArray();
-
-        temp = btry_jsonArray.get(0).getAsJsonObject().get("btry_mdul_tempr_arr").toString().replace("\"{}", "");
-        long count_temp = temp.chars().filter(ch -> ch == ',').count() + 1;
-//        System.out.println(temp);
-        for(int i = 0; i < count_temp; i++){
-//        entryList_temp.add(new Entry(i, ))
-        }
-        volt = btry_jsonArray.get(0).getAsJsonObject().get("btry_cells_arr").toString().replace("\"{}", "");
-        long count_volt = volt.chars().filter(ch -> ch == ',').count() + 1;
-//        System.out.println(volt);
-        for(int i = 0; i < count_volt; i++){
-//        entryList_temp.add(new Entry(i, ))
-        }
-
         return inflater.inflate(R.layout.fragment_state, container, false);
     }
 
@@ -205,13 +167,6 @@ public class StateFragment extends Fragment {
             linearLayoutManager = new LinearLayoutManager(getContext());
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(pushHistoryAdapter);
-
-
-
-
-//            scatter_temp.setData();
-
-
 
         }
     }
