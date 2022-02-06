@@ -21,7 +21,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-    private Button button;
+    private Button scheduler_button;
     private Button token_button;
     public static String android_token;
     public static String selected;
@@ -31,18 +31,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         android_token = new String();
-        button = (Button) findViewById(R.id.notifyBtn);
+        scheduler_button = (Button) findViewById(R.id.notifyBtn);
         token_button = (Button) findViewById(R.id.token_button);
         //백그라운드에서 동작하는 스케쥴러 시작
-        button.setOnClickListener(new View.OnClickListener() {
+        scheduler_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SchedulerService.class);
                 startService(intent);
             }
         });
-        button.performClick();
+        scheduler_button.performClick();
 
+        //FCM 서버 사용을 위한 안드로이드 기기 토큰 발급받기
         token_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,15 +53,15 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<String> task) {
                                 if (!task.isSuccessful()){
-                                    Log.w("SF", "Fetching FCM registration token failed", task.getException());
+                                    Log.w("FCM", "Fetching FCM registration token failed", task.getException());
                                     return;
                                 }
                                 // Get new FCM registration token
                                 String token = task.getResult();
 
-                                // Log and toast
+                                // Log and
                                 String msg = getString(R.string.msg_token_fmt, token);
-                                Log.d("SF", msg);
+                                Log.d("TOKEN", msg);
                                 android_token = msg.substring(12, msg.length());
                             }
                         });

@@ -1,17 +1,8 @@
 <?php
-
-// if(extension_loaded("curl")){
-// 	echo "cUrl extension is loaded";
-// }else{
-//     echo "cUrl extension is not available";
-// }
+//이 코드가 잘 실행되면 post_push와 합쳐서 실행할 예정
 
 // 특정 사용자 토큰, 보낼 메시지 제목 및 내용을 전달 받습니다.
-// $token = $this->input_check('token');
-// $title = $this->input_check('title');
-// $message = $this->input_check('message');
-
-$token = "cNnuuXz-To2ARwy-NVTR_F:APA91bE6EHUNYt2arLCUUFaGWTG6mNHnfNW1Dhtp2KrmZALY53PeZ84l40K59nLGzd7boHL_vtsGviD_zNBZ987a5uK46Zf90CwhKhTuEqAwllZ2cFI7mjfpSthjVc44M8dSovqKx34y";
+$token = $_GET['token'];
 $title = $_GET['title'];
 $message = $_GET['message'];
 // echo $token.$title.$message;
@@ -26,10 +17,12 @@ $notification['title'] = $title;
 $notification['body'] = $message;
 $tokens = array();
 $tokens[0] = $token;
+$data = array();
+$data['title'] = 'notify test';
 // 전송을 진행합니다.
 $url = 'https://fcm.googleapis.com/fcm/send';
 $apiKey = "AAAAvm6_DU4:APA91bFnfCkTp9mA2dbODtF928ak4fSmFYxVKzTuSzDoerYNXz15A6K5tmAQpABLog7YunCKqs0rq0bFpqf5bumhaYpu7tkuh1ZnD2vFqmBERTIMb5IrZIJldqfD2pTspUmC01hlGARU";
-$fields = array('registration_ids' => $tokens,'notification' => $notification);
+$fields = array('registration_ids' => $tokens,'notification' => $notification, 'data' => $data, 'priority' => "high");
 $headers = array('Authorization:key='.$apiKey,'Content-Type: application/json');
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);

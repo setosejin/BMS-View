@@ -2,22 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:background="@drawable/textview_rounding_box_list"
+    android:orientation="horizontal">
 
     <ImageView
-        android:src="@drawable/flash"
         android:id="@+id/push_history_icon"
-        android:padding="15dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:padding="15dp"
+        android:src="@drawable/flash" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <!-- push_type에 따라서 push 종류 출력 및 아이콘 선택       -->
         <TextView

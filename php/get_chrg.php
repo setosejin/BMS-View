@@ -1,10 +1,13 @@
 <?php
 
 $conn = mysqli_connect("localhost:3306", "root", "root", "battery_info");
-
-$sql = "SELECT vehicle_speed, odometer FROM battery_info.driving_record";
-        // SELECT odometer, mvmn_time FROM battery_record";
-
+// if($mysqli->connect_errno) {
+// 	echo '[MySQL 연결 오류]';
+// } else {
+// 	echo '[MySQL 연결 성공]';
+// }
+$sql = "SELECT vehicle_speed, odometer FROM battery_info.driving_record ORDER BY updated_time desc limit 100";
+        
 $res = $conn->query($sql);
 
 $result = array();
@@ -45,7 +48,7 @@ if($res3 === false){
 
 //
 
-$sql2 = "SELECT state_of_chrg_bms, state_of_health FROM battery_info.battery_record";
+$sql2 = "SELECT mvmn_time, state_of_chrg_bms, state_of_health FROM battery_info.battery_record ORDER BY colec_time desc limit 100";
 
 $res2 = $conn->query($sql2);
 if($res2->num_rows > 0) {
@@ -53,13 +56,10 @@ if($res2->num_rows > 0) {
         //echo json_encode($row);
         extract($row);
 
-        array_push($result, array('vehicle_speed'=>$vehicle_speed, 'odometer'=>$odometer, 'state_of_chrg_bms'=>$state_of_chrg_bms, 'state_of_health'=>$state_of_health, 'quick_recharge_cnt'=>$quick_recharge_cnt, 'slow_recharge_cnt'=>$slow_recharge_cnt));
+        array_push($result, array('mvmn_time'=>$mvmn_time, 'vehicle_speed'=>$vehicle_speed, 'odometer'=>$odometer, 'state_of_chrg_bms'=>$state_of_chrg_bms, 'state_of_health'=>$state_of_health, 'quick_recharge_cnt'=>$quick_recharge_cnt, 'slow_recharge_cnt'=>$slow_recharge_cnt));
     }
     header('Content-Type: application/json; charset=utf8');
     $json = json_encode(array('chrg'=>$result), JSON_PRETTY_PRINT+JSON_UNESCAPED_UNICODE);
-
-
-    // echo sizeof($result);
 
     echo $json;
 }else{

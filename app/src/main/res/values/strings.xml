@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">B careful</string>
+    <string name="app_name">B Careful</string>
     <string name="msg_token_fmt" translatable="false">FCM token : %s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

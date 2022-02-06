@@ -27,18 +27,18 @@ public class SleepScheduler extends Thread{
     public void run(){
         //반복적으로 수행할 작업을 한다.
         while(isRun){
-            handler.sendEmptyMessage(0);//쓰레드에 있는 핸들러에게 메세지를 보냄
-            token = MainActivity.android_token;
+            handler.sendEmptyMessage(0); //쓰레드에 있는 핸들러에게 메세지를 보냄
+            token = MainActivity.android_token; //발급 받은 FCM 기기 토큰을 받아옴
             System.out.println(token);
 
-            rfBtn1 = HomeFragment.refresh_button;
-            rfBtn2 = ChargeFragment.refresh_button;
-            rfBtn3 = StateFragment.refresh_button;
+            rfBtn1 = HomeFragment.refresh_button; //홈 화면 새로고침 버튼
+            rfBtn2 = ChargeFragment.refresh_button; // 충전 화면 새로고침 버튼
+            rfBtn3 = StateFragment.refresh_button; // 푸시 화면 새로고침 버튼
             selected_frag = MainActivity.selected;
             System.out.println(selected_frag);
 
             if(selected_frag == "home") {
-                rfBtn1.callOnClick(); // 현재 fragment에서만 버튼을 클릭할 수 있음.
+                rfBtn1.callOnClick(); // 현재 fragment에서만 버튼을 클릭할 수 있음
             }
             else if(selected_frag == "charge") {
                 rfBtn2.callOnClick();
@@ -46,50 +46,20 @@ public class SleepScheduler extends Thread{
             else if(selected_frag == "state"){
                 rfBtn3.callOnClick();
             }
+            //이 외의 상태는 null
 
-
-            String get_btry = "http://192.168.56.1:80/get_btry.php";
-            URLConnector btry_thread = new URLConnector(get_btry);
-            btry_thread.start();
+            String get_data = "http://192.168.56.1:80/realtime_data.php";
+            URLConnector data_thread = new URLConnector(get_data);
+            data_thread.start();
             try{
-                btry_thread.join();
+                data_thread.join();
             }
             catch(InterruptedException e){
                 System.out.println(e);
             }
-            JsonObject btry_resultObj = btry_thread.getResult();
-            JsonArray btry_jsonArray = new JsonArray();
-            btry_jsonArray = btry_resultObj.get("btry").getAsJsonArray();
-
-            String get_soc = "http://192.168.56.1:80/get_soc.php";
-            URLConnector soc_thread = new URLConnector(get_soc);
-            soc_thread.start();
-            try{
-                soc_thread.join();
-            }
-            catch(InterruptedException e){
-                System.out.println(e);
-            }
-            JsonObject soc_resultObj = soc_thread.getResult();
-            JsonArray soc_jsonArray = new JsonArray();
-            soc_jsonArray = soc_resultObj.get("soc").getAsJsonArray();
-
-            String get_chrg = "http://192.168.56.1:80/get_chrg.php";
-            URLConnector thread_chrg = new URLConnector(get_chrg);
-            thread_chrg.start();
-            try{
-                thread_chrg.join();
-            }
-            catch(InterruptedException e){
-                System.out.println(e);
-            }
-            JsonObject resultObj_chrg = thread_chrg.getResult();
-            JsonArray jsonArray_chrg = new JsonArray();
-            jsonArray_chrg = resultObj_chrg.get("chrg").getAsJsonArray();
-
-
-
-
+            JsonObject resultObj = data_thread.getResult();
+            JsonArray jsonArray = new JsonArray();
+            jsonArray = resultObj.get("data").getAsJsonArray();
 
             //가져온 데이터들을 확인해서 임계치가 넘어가면 푸시 보내기!
 //            String push_url = "http://192.168.56.1:80/test_curl.php?token="+token+"&title="+push_title+"&message="+push_message;

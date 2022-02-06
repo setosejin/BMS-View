@@ -130,9 +130,9 @@ public class StateFragment extends Fragment {
         jsonArray = resultObj.get("push_history").getAsJsonArray();
         for(int i = 0; i < jsonArray.size(); i++){
             PushHistory pushHistory = new PushHistory(0,
-                    jsonArray.get(i).getAsJsonObject().get("push_type").toString(),
-                    jsonArray.get(i).getAsJsonObject().get("send_time").toString(),
-                    jsonArray.get(i).getAsJsonObject().get("send_msg").toString());
+                    jsonArray.get(i).getAsJsonObject().get("push_type").toString().replace("\"", ""),
+                    jsonArray.get(i).getAsJsonObject().get("send_time").toString().replace("\"", ""),
+                    jsonArray.get(i).getAsJsonObject().get("send_msg").toString().replace("\"", ""));
             arrayList.add(pushHistory);
         }
 
