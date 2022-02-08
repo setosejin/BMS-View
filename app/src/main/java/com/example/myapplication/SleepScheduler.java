@@ -29,12 +29,12 @@ public class SleepScheduler extends Thread{
         while(isRun){
             handler.sendEmptyMessage(0); //쓰레드에 있는 핸들러에게 메세지를 보냄
             token = MainActivity.android_token; //발급 받은 FCM 기기 토큰을 받아옴
-            System.out.println(token);
+//            System.out.println(token);
 
-            rfBtn1 = HomeFragment.refresh_button; //홈 화면 새로고침 버튼
+            rfBtn1 = HomeFragment.refresh_button; // 홈 화면 새로고침 버튼
             rfBtn2 = ChargeFragment.refresh_button; // 충전 화면 새로고침 버튼
             rfBtn3 = StateFragment.refresh_button; // 푸시 화면 새로고침 버튼
-            selected_frag = MainActivity.selected;
+            selected_frag = MainActivity.selected; // 선택된 Fragment
             System.out.println(selected_frag);
 
             if(selected_frag == "home") {
@@ -47,6 +47,7 @@ public class SleepScheduler extends Thread{
                 rfBtn3.callOnClick();
             }
             //이 외의 상태는 null
+
 
             String get_data = "http://192.168.56.1:80/realtime_data.php";
             URLConnector data_thread = new URLConnector(get_data);

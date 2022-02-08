@@ -27,12 +27,27 @@ public class MainActivity extends AppCompatActivity {
     public static String selected;
 
     @Override
+    protected void onPause() { //화면이 백그라운드일 경우 선택된 Fragment가 없다고 명시
+        super.onPause();
+        selected = "";
+    }
+
+    @Override
+    protected void onStop() { // 화면이 중단된 경우 선택된 Fragment가 없다고 명시
+        super.onStop();
+        selected = "";
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         android_token = new String();
         scheduler_button = (Button) findViewById(R.id.notifyBtn);
         token_button = (Button) findViewById(R.id.token_button);
+
+        selected = "home";
+
         //백그라운드에서 동작하는 스케쥴러 시작
         scheduler_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         scheduler_button.performClick();
+
 
         //FCM 서버 사용을 위한 안드로이드 기기 토큰 발급받기
         token_button.setOnClickListener(new View.OnClickListener() {
@@ -58,11 +74,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 // Get new FCM registration token
                                 String token = task.getResult();
-
-                                // Log and
+                                android_token = token;
                                 String msg = getString(R.string.msg_token_fmt, token);
-                                Log.d("TOKEN", msg);
-                                android_token = msg.substring(12, msg.length());
+                                Log.d("TokenBtn", msg);
                             }
                         });
             }

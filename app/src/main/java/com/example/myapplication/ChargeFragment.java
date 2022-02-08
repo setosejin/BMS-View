@@ -168,7 +168,7 @@ public class ChargeFragment extends Fragment {
         System.out.println(temp);
         String []tokens_temp=temp.split(",");
         for(int i = 0; i < count_temp; i++){
-            System.out.println(tokens_temp[i]);
+//            System.out.println(tokens_temp[i]);
             entryList_temp.add(new Entry(i+1, Float.parseFloat(tokens_temp[i])));
         }
 
