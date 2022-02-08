@@ -14,7 +14,7 @@ import java.net.URL;
 
 class URLConnectorPost extends Thread {
 
-    private JsonObject result;
+    private String result;
     private String URL;
 
     public URLConnectorPost(String url){
@@ -52,9 +52,8 @@ class URLConnectorPost extends Thread {
                     }
 
                     String outputStr = String.valueOf(output);
-                    JsonObject jobj = new Gson().fromJson(outputStr, JsonObject.class);
                     reader.close();
-                    result = jobj;
+                    result = outputStr;
                 }
                 conn.disconnect();
             }
@@ -66,7 +65,7 @@ class URLConnectorPost extends Thread {
 
     }
 
-    public JsonObject getResult(){
+    public String getResult(){
         return result;
     }
 

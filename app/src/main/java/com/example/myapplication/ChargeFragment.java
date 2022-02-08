@@ -165,7 +165,7 @@ public class ChargeFragment extends Fragment {
         temp = temp.replace("\"", "");
         temp = temp.replace("{", "");
         temp = temp.replace("}", "");
-        System.out.println(temp);
+//        System.out.println(temp);
         String []tokens_temp=temp.split(",");
         for(int i = 0; i < count_temp; i++){
 //            System.out.println(tokens_temp[i]);

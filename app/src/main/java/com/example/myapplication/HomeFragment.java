@@ -109,7 +109,6 @@ public class HomeFragment extends Fragment {
         soc_thread.start();
         try{
             soc_thread.join();
-            //System.out.println("waiting... for result");
         }
         catch(InterruptedException e){
             System.out.println(e);
