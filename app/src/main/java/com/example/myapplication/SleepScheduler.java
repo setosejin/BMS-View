@@ -7,8 +7,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.Executors;
 
 public class SleepScheduler extends Thread{
     Handler handler;
@@ -16,7 +20,7 @@ public class SleepScheduler extends Thread{
     private int willpush = 0;
 
     private String car_id, user_id, time, token, push_title, push_message, max_cell_volt, min_cell_volt, max_temp, min_temp, soc, soh;
-    String selected_frag;
+    String selected_frag, tomorrow;
     Button rfBtn1, rfBtn2, rfBtn3;
 
 
@@ -77,7 +81,11 @@ public class SleepScheduler extends Thread{
             soc = jsonArray.get(0).getAsJsonObject().get("state_of_chrg_bms").toString().replace("\"", "");
             soh = jsonArray.get(0).getAsJsonObject().get("state_of_health").toString().replace("\"", "");
 
-            System.out.println(min_cell_volt);
+
+            time = getTime();
+
+
+
             //가져온 데이터들을 확인해서 임계치가 넘어가면 푸시 보내기!
             if(Float.parseFloat(max_temp)>60){
                 willpush = 1;
@@ -104,8 +112,37 @@ public class SleepScheduler extends Thread{
                 SendPush(willpush);
             }
 
+            String now = getOnlyTime();
+            String t = now.substring(0, 2);
+            String m = now.substring(3, 5);
+            String s = now.substring(6, 8);
+            if(t == "17" && m == "30"){
+                int sec = (int) Float.parseFloat(s);
+                if (sec > 0 && sec <= 15){
+                    //매일 저녁 날씨 확인
+                    final WeatherAPI weatherAPI = new WeatherAPI();
+                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                System.out.println("weather");
+                                weatherAPI.func();
+                            } catch (IOException | JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    //내일 온도에 따라 푸시
+                    tomorrow = WeatherAPI.tomorrowTmp;
+                    if(Float.parseFloat(tomorrow) < -10 || Float.parseFloat(tomorrow) > 30){
+                        willpush = 7;
+                        SendPush(willpush);
+                    }
+                }
+            }
+
             if(willpush>0) {
-                System.out.println("willpush");
+                System.out.println("will push");
                 willpush = 0;
             }
 
@@ -143,6 +180,10 @@ public class SleepScheduler extends Thread{
                 push_title = "배터리 교체 알림";
                 push_message = "배터리 수명이 80% 미만입니다. 새로운 배터리로 교체를 권장합니다.";
                 break;
+            case 7:
+                push_title = "내일을 위한 주차 팁";
+                push_message = "내일은 배터리 수명을 위해 실내 주차를 권장합니다.";
+                break;
         }
 
         String push_url = "http://192.168.56.1:80/test_curl.php?token="+token+"&title="+push_title+"&message="+push_message;
@@ -150,7 +191,6 @@ public class SleepScheduler extends Thread{
         thread_push.start();
         try{
             thread_push.join();
-            //System.out.println("waiting... for result");
         }
         catch(InterruptedException e){
             System.out.println(e);
@@ -158,12 +198,24 @@ public class SleepScheduler extends Thread{
         JsonObject resultObj_push = thread_push.getResult();
         System.out.println(resultObj_push);
 
-        time = getTime();
-        System.out.println(car_id);
-        System.out.println(time);
+
+        String pushId_url = "http://192.168.56.1:80/get_last_push_id.php";
+        URLConnector thread_pushId = new URLConnector(pushId_url);
+        thread_pushId.start();
+        try{
+            thread_pushId.join();
+        }
+        catch(InterruptedException e){
+            System.out.println(e);
+        }
+        JsonObject resultObj_pushId = thread_pushId.getResult();
+        JsonArray jsonArray = new JsonArray();
+        jsonArray = resultObj_pushId.get("push_id").getAsJsonArray();
+        int last_id = (int) Float.parseFloat(jsonArray.get(0).getAsJsonObject().get("id").toString().replace("\"", ""));
+        ++last_id;
 
 //        String post_url = "http://192.168.56.1:80/test_push.php?car="+car_id+"&user="+user_id+"&type="+push_title+"&time="+time+"&msg="+push_message;
-        String post_url = "http://192.168.56.1:80/test_push.php?car="+car_id+"&type="+push_title+"&msg="+push_message;
+        String post_url = "http://192.168.56.1:80/test_push.php?id="+last_id+"&car="+car_id+"&type="+push_title+"&msg="+push_message;
 
         //id(PK)를 겹치지 않게 잘 설정해야함!
         //->마지막 id를 갖고 와서 +1해주는 코드 필요
@@ -186,4 +238,14 @@ public class SleepScheduler extends Thread{
         String gettime = dateFormat.format(date);
         return gettime;
     }
+
+    private String getOnlyTime() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+        String getonlytime = dateFormat.format(date);
+        return getonlytime;
+    }
+
+    //요일 알아내는 method
 }

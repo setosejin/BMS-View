@@ -63,18 +63,14 @@ class URLConnector extends Thread {
                         if (line == null) {
                             break;
                         }
-                        //System.out.println("line, "+ line.toString());
+//                        System.out.println("line, "+ line.toString());
                         output.append(line + "\n");
 
                     }
 
                     String outputStr = String.valueOf(output);
-//                    outputStr = outputStr.substring(1, output.length()-2);
-//                    outputStr.replace("[", "");
-//                    outputStr.replace("]", "");
-//                    System.out.println("outputStr: "+outputStr);
+//                    System.out.println(outputStr);
                     JsonObject jobj = new Gson().fromJson(outputStr, JsonObject.class);
-//                    System.out.println("JsonObject: "+jobj.toString());
                     reader.close();
                     result = jobj;
                 }
