@@ -33,11 +33,6 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChargeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ChargeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -52,11 +47,10 @@ public class ChargeFragment extends Fragment {
     public static Button refresh_button;
 
     TextView tv_perfect_charge, tv_perfect_discharge, tv_quick_charge, tv_slow_charge, tv_fuel, tv_distance, tv_time;
+    //충전 횟수는 쿼리에서 처리 필요
+    String perfect_charge, perfect_discharge, quick_charge, slow_charge, fuel, distance, time, temp;
 
-    String perfect_charge, perfect_discharge, quick_charge, slow_charge, fuel, distance, time, temp, volt;
-
-    private LineChart lineChart_soc, lineChart_soh;
-    List<Entry> entryList_soc = new ArrayList<>();
+    private LineChart lineChart_soh;
     List<Entry> entryList_soh = new ArrayList<>();
 
     private ScatterChart scatterChart;
@@ -66,14 +60,6 @@ public class ChargeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChargeFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static ChargeFragment newInstance(String param1, String param2) {
         ChargeFragment fragment = new ChargeFragment();
@@ -105,7 +91,6 @@ public class ChargeFragment extends Fragment {
         thread_chrg.start();
         try{
             thread_chrg.join();
-            //System.out.println("waiting... for result");
         }
         catch(InterruptedException e){
             System.out.println(e);
@@ -130,16 +115,9 @@ public class ChargeFragment extends Fragment {
         time = time + "시간";
 
         for(int i = 0; i < 100; i+=10){
-            //System.out.println("TEST: "+jsonArray_chrg.get(i));
-            //System.out.println("["+i+"] "+(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString()));
-//            int len = jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString().length();
             int len2 = jsonArray_chrg.get(i).getAsJsonObject().get("state_of_health").toString().length();
             //line_chart로 그려줄 (속성, 값) entry에 넣어주기
-//            entryList_soc.add(new Entry(i, Float.parseFloat(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_chrg_bms").toString().substring(1, len - 1))));
             entryList_soh.add(new Entry((i+10)/10, Float.parseFloat(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_health").toString().substring(1, len2 - 1))));
-
-//            System.out.println("chart: "+jsonArray_chrg.get(i).getAsJsonObject());
-
         }
 
 
@@ -149,7 +127,6 @@ public class ChargeFragment extends Fragment {
         btry_thread.start();
         try{
             btry_thread.join();
-            //System.out.println("waiting... for result");
         }
         catch(InterruptedException e){
             System.out.println(e);
@@ -165,10 +142,8 @@ public class ChargeFragment extends Fragment {
         temp = temp.replace("\"", "");
         temp = temp.replace("{", "");
         temp = temp.replace("}", "");
-//        System.out.println(temp);
         String []tokens_temp=temp.split(",");
         for(int i = 0; i < count_temp; i++){
-//            System.out.println(tokens_temp[i]);
             entryList_temp.add(new Entry(i+1, Float.parseFloat(tokens_temp[i])));
         }
 
@@ -185,8 +160,6 @@ public class ChargeFragment extends Fragment {
         View view = getView();
         if(view != null) {
             //실제로 매칭해주고 setText 등등..
-//            textView = view.findViewById(R.id.textView_test);
-//            textView.setText("modified");
             tv_distance = view.findViewById(R.id.distance2);
             tv_distance.bringToFront();
             tv_distance.setText(distance);
@@ -201,11 +174,11 @@ public class ChargeFragment extends Fragment {
 
             tv_fuel = view.findViewById(R.id.fuel2);
             tv_fuel.bringToFront();
-            tv_fuel.setText("6.1km/kWh");
+            tv_fuel.setText("6.1km/kWh"); // 배터리 용량 필요
 
             tv_time = view.findViewById(R.id.time2);
             tv_time.bringToFront();
-            tv_time.setText("587시간");
+            tv_time.setText((int) Float.parseFloat(time));
 
             refresh_button = view.findViewById(R.id.charge_refresh);
             refresh_button.setOnClickListener(new Button.OnClickListener() {

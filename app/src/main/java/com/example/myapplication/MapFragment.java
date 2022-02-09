@@ -18,44 +18,22 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MapFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private MapView mapView;
-    private GoogleMap carMap;
 
     public MapFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MapFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static MapFragment newInstance(String param1, String param2) {
         MapFragment fragment = new MapFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,8 +42,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -89,13 +65,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
         LatLng location = new LatLng(37.47156575506914, 127.02938828426859);
-
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.title("KT 우면동");
         markerOptions.snippet("회사");
         markerOptions.position(location);
-        googleMap.addMarker(markerOptions);
 
+        //현재 위치 마커 맵핑
+        //get_crd.php 필요
+        String get_crd = "http://192.168.56.1:80/get_crd.php";
+        URLConnector crd_thread = new URLConnector(get_crd);
+
+        crd_thread.start();
+        try{
+            crd_thread.join();
+        }
+        catch(InterruptedException e){
+            System.out.println(e);
+        }
+
+        JsonObject crd_resultObj = crd_thread.getResult();
+        JsonArray crd_jsonArray = new JsonArray();
+
+        crd_jsonArray = crd_resultObj.get("crd").getAsJsonArray();
+        System.out.println("CRD: "+crd_jsonArray);
+
+        googleMap.addMarker(markerOptions);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 17));
 
         //carMap = googleMap;

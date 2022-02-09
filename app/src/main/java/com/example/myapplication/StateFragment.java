@@ -44,25 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StateFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class StateFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    TextView textView;
-    String temp, volt;
-
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -77,20 +59,10 @@ public class StateFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StateFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static StateFragment newInstance(String param1, String param2) {
         StateFragment fragment = new StateFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,10 +71,8 @@ public class StateFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
-        temp = new String();
         arrayList = new ArrayList<>();
     }
 
@@ -112,13 +82,13 @@ public class StateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+
         String get_history = "http://192.168.56.1:80/get_push_history.php";
         URLConnector history_thread = new URLConnector(get_history);
 
         history_thread.start();
         try{
             history_thread.join();
-            //System.out.println("waiting... for result");
         }
         catch(InterruptedException e){
             System.out.println(e);
@@ -134,6 +104,9 @@ public class StateFragment extends Fragment {
                     jsonArray.get(i).getAsJsonObject().get("send_time").toString().replace("\"", ""),
                     jsonArray.get(i).getAsJsonObject().get("send_msg").toString().replace("\"", ""));
             arrayList.add(pushHistory);
+
+
+            // 푸시별 횟수 계산 코드 필요
         }
 
         return inflater.inflate(R.layout.fragment_state, container, false);

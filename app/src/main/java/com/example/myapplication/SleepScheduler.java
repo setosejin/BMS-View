@@ -11,6 +11,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.Executors;
 
@@ -39,7 +40,6 @@ public class SleepScheduler extends Thread{
         while(isRun){
             handler.sendEmptyMessage(0); //쓰레드에 있는 핸들러에게 메세지를 보냄
             token = MainActivity.android_token; //발급 받은 FCM 기기 토큰을 받아옴
-//            System.out.println(token);
 
             rfBtn1 = HomeFragment.refresh_button; // 홈 화면 새로고침 버튼
             rfBtn2 = ChargeFragment.refresh_button; // 충전 화면 새로고침 버튼
@@ -82,8 +82,7 @@ public class SleepScheduler extends Thread{
             soh = jsonArray.get(0).getAsJsonObject().get("state_of_health").toString().replace("\"", "");
 
 
-            time = getTime();
-
+            time = getTime(); // 날짜 & 현재 시간
 
 
             //가져온 데이터들을 확인해서 임계치가 넘어가면 푸시 보내기!
@@ -141,8 +140,22 @@ public class SleepScheduler extends Thread{
                 }
             }
 
+            Calendar cal = Calendar.getInstance();
+            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            if(dayOfWeek == 1){ // 일요일
+                if(t == "20" && m == "30"){
+                    int sec = (int) Float.parseFloat(s);
+                    if (sec > 0 && sec <= 15){
+                        // 주간 안전 리포트 푸시 알림
+
+                        // 충전 습관 & 주행 습관
+
+                    }
+                }
+            }
+
             if(willpush>0) {
-                System.out.println("will push");
+//                System.out.println("will push");
                 willpush = 0;
             }
 
@@ -186,6 +199,7 @@ public class SleepScheduler extends Thread{
                 break;
         }
 
+        // 푸시 알림 API
         String push_url = "http://192.168.56.1:80/test_curl.php?token="+token+"&title="+push_title+"&message="+push_message;
         URLConnector thread_push = new URLConnector(push_url);
         thread_push.start();
@@ -196,9 +210,9 @@ public class SleepScheduler extends Thread{
             System.out.println(e);
         }
         JsonObject resultObj_push = thread_push.getResult();
-        System.out.println(resultObj_push);
+//        System.out.println(resultObj_push);
 
-
+        //마지막 푸시 id 갖고 옴
         String pushId_url = "http://192.168.56.1:80/get_last_push_id.php";
         URLConnector thread_pushId = new URLConnector(pushId_url);
         thread_pushId.start();
@@ -214,11 +228,9 @@ public class SleepScheduler extends Thread{
         int last_id = (int) Float.parseFloat(jsonArray.get(0).getAsJsonObject().get("id").toString().replace("\"", ""));
         ++last_id;
 
-//        String post_url = "http://192.168.56.1:80/test_push.php?car="+car_id+"&user="+user_id+"&type="+push_title+"&time="+time+"&msg="+push_message;
+        // push_history에 새로운 푸시 INSERT
         String post_url = "http://192.168.56.1:80/test_push.php?id="+last_id+"&car="+car_id+"&type="+push_title+"&msg="+push_message;
 
-        //id(PK)를 겹치지 않게 잘 설정해야함!
-        //->마지막 id를 갖고 와서 +1해주는 코드 필요
         URLConnectorPost thread_post = new URLConnectorPost(post_url);
         thread_post.start();
         try{
@@ -228,7 +240,7 @@ public class SleepScheduler extends Thread{
             System.out.println(e);
         }
         String postResult = thread_post.getResult();
-        System.out.println(postResult);
+//        System.out.println(postResult);
     }
 
     private String getTime() {
@@ -247,5 +259,4 @@ public class SleepScheduler extends Thread{
         return getonlytime;
     }
 
-    //요일 알아내는 method
 }

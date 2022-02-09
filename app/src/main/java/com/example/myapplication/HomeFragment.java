@@ -138,12 +138,14 @@ public class HomeFragment extends Fragment {
             }
             safety_grade = soc_jsonArray.get(i).getAsJsonObject().get("safety_grade").toString();
 
-//            distance_ = soc_jsonArray.get(i).getAsJsonObject().get("odometer").toString();
-//            time_ = soc_jsonArray.get(i).getAsJsonObject().get("mvmn_time").toString();
+//            distance_ = soc_jsonArray.get(i).getAsJsonObject().get("odometer").toString(); // 누적치 -> 1일 전 데이터를 빼주는 코드 필요.
+//            time_ = soc_jsonArray.get(i).getAsJsonObject().get("mvmn_time").toString(); // 누적치
+            fuel_ = "5.8"; // 전비 = 운행거리 / (배터리 사용 용량 * SOH) // 배터리 총 용량을 추후 받아올 것.
             distance_ = "69.3";
             time_ = "71";
             safety_grade = safety_grade.replace("\"", "");
-
+            fuel_ = fuel_.replace("\"", "");
+            fuel_ = fuel_ + "km/kWh";
             distance_ = distance_.replace("\"", "");
             distance_ = distance_ + "km";
             time_ = time_.replace("\"", "");
