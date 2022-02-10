@@ -47,7 +47,7 @@ public class ChargeFragment extends Fragment {
     public static Button refresh_button;
 
     TextView tv_perfect_charge, tv_perfect_discharge, tv_quick_charge, tv_slow_charge, tv_fuel, tv_distance, tv_time;
-    //충전 완료 횟수는 쿼리에서 처리 필요
+    //완전 충전/방전 횟수는 쿼리에서 처리 필요
     String perfect_charge, perfect_discharge, quick_charge, slow_charge, fuel, distance, time, temp;
 
     private LineChart lineChart_soh;
@@ -106,6 +106,9 @@ public class ChargeFragment extends Fragment {
         distance = jsonArray_chrg.get(0).getAsJsonObject().get("odometer").toString();
         distance = distance.replace("\"", "");
         distance = distance + "km";
+        fuel = "5.9";
+        fuel = fuel.replace("\"", "");
+        fuel = fuel + "km/kWh";
         time = jsonArray_chrg.get(0).getAsJsonObject().get("mvmn_time").toString();
         time = time.replace("\"", "");
         int t = (int) Float.parseFloat(time);
@@ -182,7 +185,7 @@ public class ChargeFragment extends Fragment {
 
             tv_fuel = view.findViewById(R.id.fuel2);
             tv_fuel.bringToFront();
-            tv_fuel.setText("6.1km/kWh"); // 배터리 용량 필요
+            tv_fuel.setText(fuel); // 배터리 용량 필요
 
             tv_time = view.findViewById(R.id.time2);
             tv_time.bringToFront();

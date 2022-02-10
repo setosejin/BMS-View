@@ -54,7 +54,10 @@ public class StateFragment extends Fragment {
     private ArrayList<PushHistory> arrayList;
 
     public static Button refresh_button;
+    String type = new String();
+    int type_c, type_b, type_d = 0;
 
+    TextView textView_c, textView_b, textView_d;
     public StateFragment() {
         // Required empty public constructor
     }
@@ -81,8 +84,6 @@ public class StateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         String get_history = "http://192.168.56.1:80/get_push_history.php";
         URLConnector history_thread = new URLConnector(get_history);
 
@@ -98,15 +99,30 @@ public class StateFragment extends Fragment {
         JsonArray jsonArray = new JsonArray();
 
         jsonArray = resultObj.get("push_history").getAsJsonArray();
+        type_c=type_b=type_d=0;
         for(int i = 0; i < jsonArray.size(); i++){
+            type = jsonArray.get(i).getAsJsonObject().get("push_type").toString().replace("\"", "");
             PushHistory pushHistory = new PushHistory(0,
-                    jsonArray.get(i).getAsJsonObject().get("push_type").toString().replace("\"", ""),
+                    type,
                     jsonArray.get(i).getAsJsonObject().get("send_time").toString().replace("\"", ""),
                     jsonArray.get(i).getAsJsonObject().get("send_msg").toString().replace("\"", ""));
             arrayList.add(pushHistory);
 
+            //날짜별로 볼 수 있었으면 좋겠다.
 
-            // 푸시별 횟수 계산 코드 필요
+            // 푸시별 횟수 계산 코드
+            switch (type){
+                case "주간 안전 리포트":
+                    type_d++;
+                    break;
+                case "배터리 셀 전압 이상 감지":
+                case "배터리 온도 이상 감지":
+                    type_b++;
+                    break;
+                case "배터리 충전 알림":
+                    type_c++;
+                    break;
+            }
         }
 
         return inflater.inflate(R.layout.fragment_state, container, false);
@@ -133,6 +149,14 @@ public class StateFragment extends Fragment {
                     System.out.println("Refreshed");
                 }
             }) ;
+
+            textView_c = view.findViewById(R.id.push_charge);
+            textView_b = view.findViewById(R.id.push_charge2);
+            textView_d = view.findViewById(R.id.push_charge3);
+
+            textView_c.setText(Integer.toString(type_c)+"회");
+            textView_b.setText(Integer.toString(type_b)+"회");
+            textView_d.setText(Integer.toString(type_d)+"회");
 
             //push_history
             pushHistoryAdapter = new PushHistoryAdapter(arrayList);

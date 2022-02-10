@@ -111,8 +111,6 @@ public class HomeFragment extends Fragment {
 
         soc_jsonArray = soc_resultObj.get("soc").getAsJsonArray();
         for(int i = 0; i < soc_jsonArray.size(); i++){
-            //System.out.println("TEST: "+soc_jsonArray.get(i));
-            //System.out.println((soc_jsonArray.get(i).getAsJsonObject().get("soc_real").toString()));
             charge_percent = soc_jsonArray.get(i).getAsJsonObject().get("soc_real").toString();
             charge_percent = charge_percent.replace("\"", "");
             charge_percent = charge_percent + "%";
@@ -131,7 +129,7 @@ public class HomeFragment extends Fragment {
             safety_grade = soc_jsonArray.get(i).getAsJsonObject().get("safety_grade").toString();
 
 //            distance_ = soc_jsonArray.get(i).getAsJsonObject().get("odometer").toString(); // 누적치 -> 1일 전 데이터를 빼주는 코드 필요.
-//            time_ = soc_jsonArray.get(i).getAsJsonObject().get("mvmn_time").toString(); // 누적치
+//            time_ = soc_jsonArray.get(i).getAsJsonObject().get("mvmn_time").toString(); // 누적치 -> 1일 전 데이터를 빼주는 코드 필요.
             fuel_ = "5.8"; // 전비 = 운행거리 / (배터리 사용 용량 * SOH) // 배터리 총 용량을 추후 받아올 것.
             distance_ = "69.3";
             time_ = "71";
@@ -209,9 +207,7 @@ public class HomeFragment extends Fragment {
             ArrayList charge_per = new ArrayList();
             float c_p = 0;
             charge_percent = charge_percent.substring(0, charge_percent.length() - 1);
-//            System.out.println(charge_percent);
             c_p = Float.parseFloat(charge_percent);
-//            System.out.println("Float: " + c_p);
 
             if(c_p > 80){
                 colors.add(Color.parseColor("#1682BF"));

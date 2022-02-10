@@ -9,51 +9,6 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-
-<!--    <TextView-->
-<!--        android:id="@+id/quick_cnt3"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="548dp"-->
-<!--        android:text="전압 그래프"-->
-<!--        android:textSize="20dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.054"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-<!--    <com.github.mikephil.charting.charts.ScatterChart-->
-<!--        android:id="@+id/scatter_volts"-->
-<!--        android:layout_width="395dp"-->
-<!--        android:layout_height="99dp"-->
-<!--        android:layout_marginTop="228dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/quick_cnt2"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="712dp"-->
-<!--        android:text="온도 그래프"-->
-<!--        android:textSize="20dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.054"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-<!--    <com.github.mikephil.charting.charts.ScatterChart-->
-<!--        android:id="@+id/scatter_tempr"-->
-<!--        android:layout_width="395dp"-->
-<!--        android:layout_height="99dp"-->
-<!--        android:layout_marginTop="60dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.7"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
