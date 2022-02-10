@@ -70,8 +70,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         markerOptions.snippet("회사");
         markerOptions.position(location);
 
-        //현재 위치 마커 맵핑
-        //get_crd.php 필요
+
+        //get_crd.php
         String get_crd = "http://192.168.56.1:80/get_crd.php";
         URLConnector crd_thread = new URLConnector(get_crd);
 
@@ -88,6 +88,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         crd_jsonArray = crd_resultObj.get("crd").getAsJsonArray();
         System.out.println("CRD: "+crd_jsonArray);
+
+        //현재 위치 마커 맵핑 필요
+
+
 
         googleMap.addMarker(markerOptions);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 17));

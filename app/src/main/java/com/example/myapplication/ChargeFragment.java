@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.ScatterChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -26,28 +27,27 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ChargeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public static Button refresh_button;
 
     TextView tv_perfect_charge, tv_perfect_discharge, tv_quick_charge, tv_slow_charge, tv_fuel, tv_distance, tv_time;
-    //충전 횟수는 쿼리에서 처리 필요
+    //충전 완료 횟수는 쿼리에서 처리 필요
     String perfect_charge, perfect_discharge, quick_charge, slow_charge, fuel, distance, time, temp;
 
     private LineChart lineChart_soh;
@@ -64,8 +64,6 @@ public class ChargeFragment extends Fragment {
     public static ChargeFragment newInstance(String param1, String param2) {
         ChargeFragment fragment = new ChargeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,8 +73,6 @@ public class ChargeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -112,12 +108,24 @@ public class ChargeFragment extends Fragment {
         distance = distance + "km";
         time = jsonArray_chrg.get(0).getAsJsonObject().get("mvmn_time").toString();
         time = time.replace("\"", "");
+        int t = (int) Float.parseFloat(time);
+        time = Integer.toString(t);
         time = time + "시간";
-
-        for(int i = 0; i < 100; i+=10){
+        int chrg_size = jsonArray_chrg.size();
+        if (chrg_size> 7){chrg_size = 7;}
+        for(int i = 0; i < chrg_size; i++){
             int len2 = jsonArray_chrg.get(i).getAsJsonObject().get("state_of_health").toString().length();
             //line_chart로 그려줄 (속성, 값) entry에 넣어주기
-            entryList_soh.add(new Entry((i+10)/10, Float.parseFloat(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_health").toString().substring(1, len2 - 1))));
+            String date = jsonArray_chrg.get(i).getAsJsonObject().get("d").toString().replace("\"", "");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-mm-dd");
+            Date d = null;
+            try {
+                d = simpleDateFormat.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long millis = d.getTime();
+            entryList_soh.add(new Entry(millis, Float.parseFloat(jsonArray_chrg.get(i).getAsJsonObject().get("state_of_health").toString().substring(1, len2 - 1))));
         }
 
 
@@ -178,7 +186,7 @@ public class ChargeFragment extends Fragment {
 
             tv_time = view.findViewById(R.id.time2);
             tv_time.bringToFront();
-            tv_time.setText((int) Float.parseFloat(time));
+            tv_time.setText(time);
 
             refresh_button = view.findViewById(R.id.charge_refresh);
             refresh_button.setOnClickListener(new Button.OnClickListener() {
@@ -194,7 +202,7 @@ public class ChargeFragment extends Fragment {
             //lineChart
             lineChart_soh = (LineChart) view.findViewById(R.id.line_chart_soh);
 
-            LineDataSet lineDataSet_soh = new LineDataSet(entryList_soh, "시간에 따른 배터리 수명 추이");
+            LineDataSet lineDataSet_soh = new LineDataSet(entryList_soh, "최근 일주일 배터리 수명 추이");
 
             lineDataSet_soh.setLineWidth(2);
             lineDataSet_soh.setCircleRadius(3);
@@ -214,6 +222,24 @@ public class ChargeFragment extends Fragment {
 
             XAxis xAxis_soh = lineChart_soh.getXAxis();
             xAxis_soh.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis_soh.setValueFormatter(new IAxisValueFormatter() {
+
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+
+                    // Show time in local version
+                    Date timeMilliseconds = new Date((long) value);
+                    DateFormat dateTimeFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+
+                    return dateTimeFormat.format(timeMilliseconds);
+
+                }
+
+                @Override
+                public int getDecimalDigits() {
+                    return 0;
+                }
+            });
             xAxis_soh.setTextColor(Color.BLACK);
             xAxis_soh.enableGridDashedLine(8, 24, 0);
             YAxis yLAxis_soh = lineChart_soh.getAxisLeft();
@@ -232,7 +258,7 @@ public class ChargeFragment extends Fragment {
             //scatter chart
             scatterChart = (ScatterChart) view.findViewById(R.id.scatter_tempr);
 
-            ScatterDataSet scatterDataSet = new ScatterDataSet(entryList_temp, "배터리 모듈의 온도 분포도");
+            ScatterDataSet scatterDataSet = new ScatterDataSet(entryList_temp, "현재 배터리 모듈의 온도 분포도");
             scatterDataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
             scatterDataSet.setColor(Color.parseColor("#D0B25E"));
             ArrayList<IScatterDataSet> dataList = new ArrayList<IScatterDataSet>();
