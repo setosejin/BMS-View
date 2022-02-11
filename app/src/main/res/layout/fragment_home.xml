@@ -193,11 +193,11 @@
         android:id="@+id/update"
         android:layout_width="170dp"
         android:layout_height="27dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="최근 업데이트 일시:"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.286"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -209,7 +209,7 @@
         android:text="시간"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.286"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -217,16 +217,17 @@
         android:id="@+id/updateBtn"
         android:layout_width="46dp"
         android:layout_height="46dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:paddingLeft="0dp"
         android:paddingRight="4dp"
         app:icon="@drawable/baseline_refresh_black_24dp"
         app:iconPadding="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
-        app:layout_constraintStart_toEndOf="@+id/update_time"
+        app:layout_constraintBottom_toTopOf="@+id/divider3"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View

@@ -2,6 +2,8 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.app.Application;
@@ -9,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,7 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
-
     BottomNavigationView bottomNavigationView;
     private Button scheduler_button;
     private Button token_button;
@@ -42,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         android_token = new String();
         scheduler_button = (Button) findViewById(R.id.notifyBtn);
         token_button = (Button) findViewById(R.id.token_button);
-
         selected = "home";
+
 
         //백그라운드에서 동작하는 스케쥴러 시작
         scheduler_button.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new HomeFragment()).commit();
 
         bottomNavigationView = findViewById((R.id.bottomNavigationView));
+        bottomNavigationView.bringToFront();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -115,6 +119,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }
