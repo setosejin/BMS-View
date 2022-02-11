@@ -1,11 +1,7 @@
 <?php
 
 $conn = mysqli_connect("localhost:3306", "root", "root", "battery_info");
-// if($mysqli->connect_errno) {
-// 	echo '[MySQL 연결 오류]';
-// } else {
-// 	echo '[MySQL 연결 성공]';
-// }
+
 
 $sql = "SELECT * FROM push_history";
 

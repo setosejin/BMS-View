@@ -6,7 +6,7 @@ $conn = mysqli_connect("localhost:3306", "root", "root", "battery_info");
 // 	echo '[MySQL 연결 성공]';
 // }
 
-$sql = "SELECT * FROM driving_record";
+$sql = "SELECT * FROM driving_record order by updated_time limit 1";
 
 $res = $conn->query($sql);
 
